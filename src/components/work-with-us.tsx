@@ -132,7 +132,7 @@ export function WorkWithUsForm() {
               <FormControl>
                 <Input
                   className="!border-b-dg-off-black placeholder:text-dg-off-black/80  text-dg-off-black"
-                  placeholder="Link to your CV"
+                  placeholder="https://..."
                   {...field}
                 />
               </FormControl>
