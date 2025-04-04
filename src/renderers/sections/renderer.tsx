@@ -28,11 +28,13 @@ import { Section24 } from "./section-24";
 import { SectionCarouselWithThumbnail } from "./section-carousel-with-thumbnails";
 import { SectionHighlights } from "./section-highlights";
 import { SectionMediaRenderer } from "./section-media";
+import { SectionPanelsRenderer } from "./section-panels";
 import { SectionProperty } from "./section-property";
 import { SectionQuestions } from "./section-question";
 import { SectionQuote } from "./section-quote";
 import { SectionSeparator } from "./section-separator";
 import { SectionTestimonials } from "./section-testimonial";
+import VideosCarouselRenderer from "./section-videos";
 
 export default async function SectionRenderer({
   animate = true,
@@ -87,6 +89,10 @@ export default async function SectionRenderer({
       elem = <SectionProperty key={section.id} {...section} />;
     } else if (section.blockType === "section-media") {
       elem = <SectionMediaRenderer key={section.id} {...section} />;
+    } else if (section.blockType === "panels") {
+      elem = <SectionPanelsRenderer key={section.id} {...section} />;
+    } else if (section.blockType === "videos") {
+      elem = <VideosCarouselRenderer key={section.id} {...section} />;
     }
     if (!elem) console.log(section);
     if (animate) {

@@ -7,7 +7,7 @@ export const VideosCarousel: Block = {
         {
           label: "Asset",
           name: "asset",
-          relationTo: ["images", "mux-video"],
+          relationTo: "mux-video",
           required: true,
           type: "relationship",
         },
@@ -20,7 +20,7 @@ export const VideosCarousel: Block = {
       ],
       label: "Videos",
       minRows: 3,
-      name: "Videos",
+      name: "videos",
       required: true,
       type: "array",
     },

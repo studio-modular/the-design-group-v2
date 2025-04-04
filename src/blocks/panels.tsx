@@ -7,8 +7,8 @@ export const Panels: Block = {
         {
           label: "Asset",
           name: "asset",
-          relationTo: ["images", "mux-video"],
-          required: true,
+          relationTo: "images",
+          required: false,
           type: "relationship",
         },
         {
@@ -20,7 +20,7 @@ export const Panels: Block = {
       ],
       label: "Panels",
       minRows: 1,
-      name: "Panels",
+      name: "panels",
       required: true,
       type: "array",
     },

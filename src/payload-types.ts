@@ -1654,16 +1654,8 @@ export interface PropertyBlock {
  * via the `definition` "VideosBlock".
  */
 export interface VideosBlock {
-  Videos: {
-    asset:
-      | {
-          relationTo: 'images';
-          value: number | Image;
-        }
-      | {
-          relationTo: 'mux-video';
-          value: number | MuxVideo;
-        };
+  videos: {
+    asset: number | MuxVideo;
     title: string;
     id?: string | null;
   }[];
@@ -1676,16 +1668,8 @@ export interface VideosBlock {
  * via the `definition` "PanelsBlock".
  */
 export interface PanelsBlock {
-  Panels: {
-    asset:
-      | {
-          relationTo: 'images';
-          value: number | Image;
-        }
-      | {
-          relationTo: 'mux-video';
-          value: number | MuxVideo;
-        };
+  panels: {
+    asset?: (number | null) | Image;
     content: {
       root: {
         type: string;
@@ -2533,7 +2517,7 @@ export interface PropertyBlockSelect<T extends boolean = true> {
  * via the `definition` "VideosBlock_select".
  */
 export interface VideosBlockSelect<T extends boolean = true> {
-  Videos?:
+  videos?:
     | T
     | {
         asset?: T;
@@ -2548,7 +2532,7 @@ export interface VideosBlockSelect<T extends boolean = true> {
  * via the `definition` "PanelsBlock_select".
  */
 export interface PanelsBlockSelect<T extends boolean = true> {
-  Panels?:
+  panels?:
     | T
     | {
         asset?: T;
