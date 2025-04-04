@@ -97,7 +97,7 @@ export default function NavigationBar({ className }: { className?: string }) {
           <Link className="uppercase tracking-wider text-base" href="/portfolio">
             Portfolio
           </Link>
-          <Link className="uppercase tracking-wider text-base" href="/real-estate" target="_blank">
+          <Link className="uppercase tracking-wider text-base" href="/real-estate">
             Real Estate
           </Link>
           <Link className="uppercase tracking-wider text-base" href="/contact">
@@ -146,7 +146,6 @@ export default function NavigationBar({ className }: { className?: string }) {
                   className="uppercase tracking-wider text-lg text-right w-11/12 mx-auto"
                   href="/real-estate"
                   onClick={() => setOpen(false)}
-                  target="_blank"
                 >
                   Real Estate
                 </Link>
