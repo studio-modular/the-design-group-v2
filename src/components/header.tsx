@@ -9,7 +9,7 @@ import { DialogTitle } from "../shadcn/components/ui/dialog";
 import { Separator } from "../shadcn/components/ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../shadcn/components/ui/sheet";
 import { cn } from "../shadcn/utils";
-import { Logo } from "./logo";
+import { DesignGroupLogo as Logo } from "./logo";
 
 export function MobileNavigationBar({ className }: { className?: string }) {
   const [open, setOpen] = useState<boolean>(false);
