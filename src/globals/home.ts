@@ -3,8 +3,10 @@ import type { GlobalConfig } from "payload";
 import { SectionCarouselWithThumbnail } from "@/blocks/carousel";
 import Highlights from "@/blocks/highlights";
 import { SectionMedia } from "@/blocks/media";
+import { Panels } from "@/blocks/panels";
 import { PropertyBlock } from "@/blocks/property";
 import { QuoteBlock } from "@/blocks/quote";
+import { VideosCarousel } from "@/blocks/video-carousel";
 import { revalidateTag } from "next/cache";
 
 import {
@@ -97,6 +99,8 @@ export const Home: GlobalConfig = {
         QuoteBlock,
         SectionMedia,
         PropertyBlock,
+        VideosCarousel,
+        Panels,
       ],
       label: "Content",
       name: "content",

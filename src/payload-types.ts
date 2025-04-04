@@ -540,6 +540,8 @@ export interface Home {
         | QuoteBlock
         | SectionMedia
         | PropertyBlock
+        | VideosBlock
+        | PanelsBlock
       )[]
     | null;
   meta?: {
@@ -1649,6 +1651,64 @@ export interface PropertyBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideosBlock".
+ */
+export interface VideosBlock {
+  Videos: {
+    asset:
+      | {
+          relationTo: 'images';
+          value: number | Image;
+        }
+      | {
+          relationTo: 'mux-video';
+          value: number | MuxVideo;
+        };
+    title: string;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videos';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PanelsBlock".
+ */
+export interface PanelsBlock {
+  Panels: {
+    asset:
+      | {
+          relationTo: 'images';
+          value: number | Image;
+        }
+      | {
+          relationTo: 'mux-video';
+          value: number | MuxVideo;
+        };
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'panels';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact".
  */
 export interface Contact {
@@ -1757,6 +1817,8 @@ export interface Portfolio {
         | QuoteBlock
         | SectionMedia
         | PropertyBlock
+        | VideosBlock
+        | PanelsBlock
       )[]
     | null;
   meta?: {
@@ -1872,6 +1934,8 @@ export interface HomeSelect<T extends boolean = true> {
         quote?: T | QuoteBlockSelect<T>;
         'section-media'?: T | SectionMediaSelect<T>;
         'property-block'?: T | PropertyBlockSelect<T>;
+        videos?: T | VideosBlockSelect<T>;
+        panels?: T | PanelsBlockSelect<T>;
       };
   meta?:
     | T
@@ -2466,6 +2530,36 @@ export interface PropertyBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideosBlock_select".
+ */
+export interface VideosBlockSelect<T extends boolean = true> {
+  Videos?:
+    | T
+    | {
+        asset?: T;
+        title?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PanelsBlock_select".
+ */
+export interface PanelsBlockSelect<T extends boolean = true> {
+  Panels?:
+    | T
+    | {
+        asset?: T;
+        content?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact_select".
  */
 export interface ContactSelect<T extends boolean = true> {
@@ -2529,6 +2623,8 @@ export interface PortfolioSelect<T extends boolean = true> {
         quote?: T | QuoteBlockSelect<T>;
         'section-media'?: T | SectionMediaSelect<T>;
         'property-block'?: T | PropertyBlockSelect<T>;
+        videos?: T | VideosBlockSelect<T>;
+        panels?: T | PanelsBlockSelect<T>;
       };
   meta?:
     | T
