@@ -7,7 +7,7 @@ import { Media } from "../media";
 export function Section09({ copyOne, heading, mediaBlockOne }: Section09Block) {
   return (
     <section className="dg-section flex flex-col gap-8 md:gap-0 md:grid grid-cols-24 grid-rows-[auto_auto_auto] w-full">
-      <div className="px-8 md:px-0 text-center md:text-left row-start-1 row-end-2 lg:row-start-2 lg:row-end-2 col-start-2 md:col-start-2 lg:col-start-2 md:col-end-6">
+      <div className="px-8 md:px-0 text-center md:text-left row-start-1 row-end-2 lg:row-start-2 lg:row-end-2 col-start-2 md:col-start-2 lg:col-start-2 md:col-end-6 lg:col-end-6">
         <h2 dangerouslySetInnerHTML={{ __html: heading }} />
       </div>
       <div className="px-8 md:px-0 text-center md:text-left row-start-1 row-end-2 lg:row-start-2 lg:row-end-2 md:col-start-7 lg:col-start-7 md:col-end-15 lg:col-end-12">
