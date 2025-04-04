@@ -60,7 +60,7 @@ export function MobileNavigationBar({ className }: { className?: string }) {
               href="/real-estate"
               onClick={() => setOpen(false)}
             >
-              Real Estate
+              Real Estate For Sale
             </Link>
             <Separator className="w-11/12 bg-white mx-auto" />
             <Link
@@ -98,7 +98,7 @@ export default function NavigationBar({ className }: { className?: string }) {
             Portfolio
           </Link>
           <Link className="uppercase tracking-wider text-base" href="/real-estate">
-            Real Estate
+            Real Estate For Sale
           </Link>
           <Link className="uppercase tracking-wider text-base" href="/contact">
             Contact
@@ -147,7 +147,7 @@ export default function NavigationBar({ className }: { className?: string }) {
                   href="/real-estate"
                   onClick={() => setOpen(false)}
                 >
-                  Real Estate
+                  Real Estate For Sale
                 </Link>
                 <Link
                   className="uppercase tracking-wider text-lg text-right w-11/12 mx-auto"
