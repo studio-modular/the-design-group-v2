@@ -8,7 +8,7 @@ export function Section19({ content, title }: Section19Block) {
       </div>
       <div
         className="md:col-start-13 md:col-end-22 lg:col-start-13 lg:col-end-19 flex items-center"
-        dangerouslySetInnerHTML={{ __html: content.replace("\n", "<br /><br/>") }}
+        dangerouslySetInnerHTML={{ __html: content.replaceAll("\n", "<br /><br/>") }}
       >
         {/* <p>{content}</p> */}
       </div>
