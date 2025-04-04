@@ -16,6 +16,7 @@ import { Users } from "./collections/Users";
 import { Contact } from "./globals/contact";
 import { Home } from "./globals/home";
 import { Portfolio } from "./globals/portfolio";
+import { RealEstate } from "./globals/real-estate";
 import { Work } from "./globals/work";
 import { env } from "./utilities/env";
 
@@ -37,7 +38,7 @@ export default buildConfig({
     push: false,
   }),
   editor: lexicalEditor(),
-  globals: [Home, Contact, Portfolio, Work],
+  globals: [Home, Contact, Portfolio, Work, RealEstate],
   plugins: [
     computeBlurhash({
       collections: ["images"],
@@ -82,6 +83,7 @@ export default buildConfig({
         "contact",
         "portfolio",
         "work",
+        "real-estate",
       ],
       tabbedUI: true,
       uploadsCollection: "images",

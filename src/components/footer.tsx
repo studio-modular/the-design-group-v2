@@ -16,11 +16,7 @@ export default function Footer() {
             <Link className="uppercase tracking-wider text-base" href="/portfolio">
               Portfolio
             </Link>
-            <Link
-              className="uppercase tracking-wider text-base"
-              href="https://waimarinolodge.co.nz/real-estate"
-              target="_blank"
-            >
+            <Link className="uppercase tracking-wider text-base" href="/real-estate" target="_blank">
               Real Estate
             </Link>
             <Link className="uppercase tracking-wider text-base" href="/contact">

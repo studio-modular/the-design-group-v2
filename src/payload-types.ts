@@ -93,12 +93,14 @@ export interface Config {
     contact: Contact;
     portfolio: Portfolio;
     work: Work;
+    'real-estate': RealEstate;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
     portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
     work: WorkSelect<false> | WorkSelect<true>;
+    'real-estate': RealEstateSelect<false> | RealEstateSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1875,6 +1877,74 @@ export interface Work {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "real-estate".
+ */
+export interface RealEstate {
+  id: number;
+  title: string;
+  asset?:
+    | ({
+        relationTo: 'images';
+        value: number | Image;
+      } | null)
+    | ({
+        relationTo: 'mux-video';
+        value: number | MuxVideo;
+      } | null);
+  arrowText?: string | null;
+  content?:
+    | (
+        | Section01Block
+        | Section02Block
+        | Section03Block
+        | Section04Block
+        | Section05Block
+        | Section06Block
+        | Section07Block
+        | Section08Block
+        | Section09Block
+        | Section10Block
+        | Section11Block
+        | Section12Block
+        | Section13Block
+        | Section14Block
+        | Section15Block
+        | Section16Block
+        | Section17Block
+        | Section18Block
+        | Section19Block
+        | Section20Block
+        | Section21Block
+        | Section22Block
+        | Section23Block
+        | Section24Block
+        | SectionSeparatorBlock
+        | FullScreenBlock
+        | CarouselBlock
+        | QuestionsBlock
+        | TestimonialBlock
+        | HighlightsBlock
+        | SectionCarouselWithThumbnail
+        | QuoteBlock
+        | SectionMedia
+        | PropertyBlock
+        | VideosBlock
+        | PanelsBlock
+      )[]
+    | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Image;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
@@ -2630,6 +2700,65 @@ export interface WorkSelect<T extends boolean = true> {
   asset?: T;
   headerCopy?: T;
   beforeCopy?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "real-estate_select".
+ */
+export interface RealEstateSelect<T extends boolean = true> {
+  title?: T;
+  asset?: T;
+  arrowText?: T;
+  content?:
+    | T
+    | {
+        'section-01-block'?: T | Section01BlockSelect<T>;
+        'section-02-block'?: T | Section02BlockSelect<T>;
+        'section-03-block'?: T | Section03BlockSelect<T>;
+        'section-04-block'?: T | Section04BlockSelect<T>;
+        'section-05-block'?: T | Section05BlockSelect<T>;
+        'section-06-block'?: T | Section06BlockSelect<T>;
+        'section-07-block'?: T | Section07BlockSelect<T>;
+        'section-08-block'?: T | Section08BlockSelect<T>;
+        'section-09-block'?: T | Section09BlockSelect<T>;
+        'section-10-block'?: T | Section10BlockSelect<T>;
+        'section-11-block'?: T | Section11BlockSelect<T>;
+        'section-12-block'?: T | Section12BlockSelect<T>;
+        'section-13-block'?: T | Section13BlockSelect<T>;
+        'section-14-block'?: T | Section14BlockSelect<T>;
+        'section-15-block'?: T | Section15BlockSelect<T>;
+        'section-16-block'?: T | Section16BlockSelect<T>;
+        'section-17-block'?: T | Section17BlockSelect<T>;
+        'section-18-block'?: T | Section18BlockSelect<T>;
+        'section-19-block'?: T | Section19BlockSelect<T>;
+        'section-20-block'?: T | Section20BlockSelect<T>;
+        'section-21-block'?: T | Section21BlockSelect<T>;
+        'section-22-block'?: T | Section22BlockSelect<T>;
+        'section-23-block'?: T | Section23BlockSelect<T>;
+        'section-24-block'?: T | Section24BlockSelect<T>;
+        'section-separator-block'?: T | SectionSeparatorBlockSelect<T>;
+        'full-screen-block'?: T | FullScreenBlockSelect<T>;
+        'carousel-block'?: T | CarouselBlockSelect<T>;
+        'questions-block'?: T | QuestionsBlockSelect<T>;
+        'testimonial-block'?: T | TestimonialBlockSelect<T>;
+        highlights?: T | HighlightsBlockSelect<T>;
+        'section-carousel-with-thumbnail'?: T | SectionCarouselWithThumbnailSelect<T>;
+        quote?: T | QuoteBlockSelect<T>;
+        'section-media'?: T | SectionMediaSelect<T>;
+        'property-block'?: T | PropertyBlockSelect<T>;
+        videos?: T | VideosBlockSelect<T>;
+        panels?: T | PanelsBlockSelect<T>;
+      };
   meta?:
     | T
     | {

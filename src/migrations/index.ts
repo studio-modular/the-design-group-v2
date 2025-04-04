@@ -4,6 +4,7 @@ import * as migration_20250404_120923_added_panels_and_videos from "./20250404_1
 import * as migration_20250404_122822_added_videos from "./20250404_122822_added_videos";
 import * as migration_20250404_123034_using_images from "./20250404_123034_using_images";
 import * as migration_20250404_123105_using_images from "./20250404_123105_using_images";
+import * as migration_20250404_131511_added_real_estate from "./20250404_131511_added_real_estate";
 
 export const migrations = [
   {
@@ -35,5 +36,10 @@ export const migrations = [
     down: migration_20250404_123105_using_images.down,
     name: "20250404_123105_using_images",
     up: migration_20250404_123105_using_images.up,
+  },
+  {
+    down: migration_20250404_131511_added_real_estate.down,
+    name: "20250404_131511_added_real_estate",
+    up: migration_20250404_131511_added_real_estate.up,
   },
 ];

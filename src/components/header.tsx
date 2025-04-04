@@ -57,7 +57,7 @@ export function MobileNavigationBar({ className }: { className?: string }) {
             <Separator className="w-11/12 bg-white mx-auto" />
             <Link
               className="uppercase tracking-wider text-lg text-left w-11/12 mx-auto"
-              href="https://waimarinolodge.co.nz/real-estate"
+              href="/real-estate"
               onClick={() => setOpen(false)}
             >
               Real Estate
@@ -97,11 +97,7 @@ export default function NavigationBar({ className }: { className?: string }) {
           <Link className="uppercase tracking-wider text-base" href="/portfolio">
             Portfolio
           </Link>
-          <Link
-            className="uppercase tracking-wider text-base"
-            href="https://waimarinolodge.co.nz/real-estate"
-            target="_blank"
-          >
+          <Link className="uppercase tracking-wider text-base" href="/real-estate" target="_blank">
             Real Estate
           </Link>
           <Link className="uppercase tracking-wider text-base" href="/contact">
@@ -148,7 +144,7 @@ export default function NavigationBar({ className }: { className?: string }) {
                 </Link>
                 <Link
                   className="uppercase tracking-wider text-lg text-right w-11/12 mx-auto"
-                  href="https://waimarinolodge.co.nz/real-estate"
+                  href="/real-estate"
                   onClick={() => setOpen(false)}
                   target="_blank"
                 >
