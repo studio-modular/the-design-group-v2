@@ -9,7 +9,7 @@ import { DialogTitle } from "../shadcn/components/ui/dialog";
 import { Separator } from "../shadcn/components/ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../shadcn/components/ui/sheet";
 import { cn } from "../shadcn/utils";
-import { DesignGroupFullLogo as Logo } from "./logo";
+import { Logo } from "./logo";
 
 export function MobileNavigationBar({ className }: { className?: string }) {
   const [open, setOpen] = useState<boolean>(false);
@@ -110,7 +110,7 @@ export default function NavigationBar({ className }: { className?: string }) {
         </nav>
         <div>
           <Link className="text-current" href="/">
-            <Logo height="80px" width="auto" />
+            <Logo height="50px" width="auto" />
           </Link>
         </div>
         <div className="flex-1 text-white flex justify-end">
