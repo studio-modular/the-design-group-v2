@@ -2,7 +2,7 @@ import type { GlobalConfig } from "payload";
 
 import { revalidateTag } from "next/cache";
 
-export const Offer: GlobalConfig = {
+export const Contact: GlobalConfig = {
   access: {
     read: () => true,
   },
@@ -32,10 +32,10 @@ export const Offer: GlobalConfig = {
   ],
   hooks: {
     afterChange: [
-      async function handleOfferChange() {
-        revalidateTag("offer");
+      async function handleContactChange() {
+        revalidateTag("contact");
       },
     ],
   },
-  slug: "offer",
+  slug: "contact",
 };

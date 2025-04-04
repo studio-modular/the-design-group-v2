@@ -6,25 +6,25 @@ import { VideoRenderer } from "@/renderers/video";
 import { AspectRatio } from "@/shadcn/components/ui/aspect-ratio";
 import { env } from "@/utilities/env";
 import { payload } from "@/utilities/payload";
-import { ChevronDown, MapPin } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
 
-const getLocationPageData = unstable_cache(
+const getportfolioPageData = unstable_cache(
   async () => {
     const cms = await payload();
     const data = await cms.findGlobal({
       depth: 4,
-      slug: "location",
+      slug: "portfolio",
     });
     return data;
   },
-  ["location", "location-page", "all"],
-  { revalidate: 86_400, tags: ["location", "location-page", "all"] },
+  ["portfolio", "portfolio-page", "all"],
+  { revalidate: 86_400, tags: ["portfolio", "portfolio-page", "all"] },
 );
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { meta } = await getLocationPageData();
+  const { meta } = await getportfolioPageData();
   return {
     description: meta?.description ?? "",
     ...(meta?.image &&
@@ -41,12 +41,12 @@ export async function generateMetadata(): Promise<Metadata> {
           ],
         },
       }),
-    title: meta?.title ?? `Home | ${env.NEXT_PUBLIC_BASE_TITLE}`,
+    title: meta?.title ?? `Portfolio | ${env.NEXT_PUBLIC_BASE_TITLE}`,
   };
 }
 
-export default async function LocationPage() {
-  const data = await getLocationPageData();
+export default async function PortfolioPage() {
+  const data = await getportfolioPageData();
   if (!data) return null;
   return (
     <>
@@ -65,15 +65,11 @@ export default async function LocationPage() {
               />
             )}
         </AspectRatio>
-        <div className="text-white text-center flex flex-col gap-4 justify-center items-center max-w-screen-sm absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <MapPin className="stroke-1 size-8 md:size-12" />
-          <h2 className="font-serif leading-loose text-balance text-lg md:text-xl">{data.markerText}</h2>
-        </div>
         <Link
           className="flex flex-col items-center gap-2 text-white absolute bottom-6 left-1/2 -translate-x-1/2"
           href="#content"
         >
-          <h2 className="uppercase tracking-widest !text-base !mb-0 font-normal">See More</h2>
+          <h2 className="uppercase tracking-widest !text-base !mb-0 font-normal">{data.markerText ?? "See More"}</h2>
           <ChevronDown className="stroke-1" />
         </Link>
       </div>

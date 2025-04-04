@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
 import Footer from "@/components/footer";
-import { PasswordProtection } from "@/components/password-protection";
 
 import "../../styles/global.css";
 
@@ -11,7 +10,6 @@ import { env } from "@/utilities/env";
 import { abel, goudy, skia } from "@/utilities/fonts";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { domAnimation, LazyMotion } from "motion/react";
-import { cookies } from "next/headers";
 import { unstable_ViewTransition as ViewTransition } from "react";
 import React from "react";
 
@@ -27,8 +25,6 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
-  const cookieStore = await cookies();
-  const hasCookie = cookieStore.has("auth_logged_in");
   const { children } = props;
   return (
     <ViewTransition>
@@ -50,7 +46,6 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             />
           </LazyMotion>
           <Scroll />
-          {!hasCookie && <PasswordProtection />}
         </body>
       </html>
     </ViewTransition>

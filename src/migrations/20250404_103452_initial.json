@@ -1,5 +1,5 @@
 {
-  "id": "de0e2512-8003-4cb5-a8e3-5bdd3c0b49d9",
+  "id": "cfce07d2-844d-45ef-aa50-9a324a05217b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -532,6 +532,145 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.files": {
+      "name": "files",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "url": {
+          "name": "url",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "thumbnail_u_r_l": {
+          "name": "thumbnail_u_r_l",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "filename": {
+          "name": "filename",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mime_type": {
+          "name": "mime_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "filesize": {
+          "name": "filesize",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "width": {
+          "name": "width",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "height": {
+          "name": "height",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "focal_x": {
+          "name": "focal_x",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "focal_y": {
+          "name": "focal_y",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "files_updated_at_idx": {
+          "name": "files_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "files_created_at_idx": {
+          "name": "files_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "files_filename_idx": {
+          "name": "files_filename_idx",
+          "columns": [
+            {
+              "expression": "filename",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.mux_video_playback_options": {
       "name": "mux_video_playback_options",
       "schema": "",
@@ -867,6 +1006,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "files_id": {
+          "name": "files_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "mux_video_id": {
           "name": "mux_video_id",
           "type": "integer",
@@ -950,6 +1095,21 @@
           "method": "btree",
           "with": {}
         },
+        "payload_locked_documents_rels_files_id_idx": {
+          "name": "payload_locked_documents_rels_files_id_idx",
+          "columns": [
+            {
+              "expression": "files_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "payload_locked_documents_rels_mux_video_id_idx": {
           "name": "payload_locked_documents_rels_mux_video_id_idx",
           "columns": [
@@ -999,6 +1159,19 @@
           "tableTo": "images",
           "columnsFrom": [
             "images_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_files_fk": {
+          "name": "payload_locked_documents_rels_files_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "files",
+          "columnsFrom": [
+            "files_id"
           ],
           "columnsTo": [
             "id"
@@ -7069,8 +7242,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.offer": {
-      "name": "offer",
+    "public.contact": {
+      "name": "contact",
       "schema": "",
       "columns": {
         "id": {
@@ -7097,24 +7270,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "meta_title": {
-          "name": "meta_title",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "meta_description": {
-          "name": "meta_description",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "meta_image_id": {
-          "name": "meta_image_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp(3) with time zone",
@@ -7128,46 +7283,16 @@
           "notNull": false
         }
       },
-      "indexes": {
-        "offer_meta_meta_image_idx": {
-          "name": "offer_meta_meta_image_idx",
-          "columns": [
-            {
-              "expression": "meta_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "offer_meta_image_id_images_id_fk": {
-          "name": "offer_meta_image_id_images_id_fk",
-          "tableFrom": "offer",
-          "tableTo": "images",
-          "columnsFrom": [
-            "meta_image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "indexes": {},
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.offer_rels": {
-      "name": "offer_rels",
+    "public.contact_rels": {
+      "name": "contact_rels",
       "schema": "",
       "columns": {
         "id": {
@@ -7208,8 +7333,8 @@
         }
       },
       "indexes": {
-        "offer_rels_order_idx": {
-          "name": "offer_rels_order_idx",
+        "contact_rels_order_idx": {
+          "name": "contact_rels_order_idx",
           "columns": [
             {
               "expression": "order",
@@ -7223,8 +7348,8 @@
           "method": "btree",
           "with": {}
         },
-        "offer_rels_parent_idx": {
-          "name": "offer_rels_parent_idx",
+        "contact_rels_parent_idx": {
+          "name": "contact_rels_parent_idx",
           "columns": [
             {
               "expression": "parent_id",
@@ -7238,8 +7363,8 @@
           "method": "btree",
           "with": {}
         },
-        "offer_rels_path_idx": {
-          "name": "offer_rels_path_idx",
+        "contact_rels_path_idx": {
+          "name": "contact_rels_path_idx",
           "columns": [
             {
               "expression": "path",
@@ -7253,8 +7378,8 @@
           "method": "btree",
           "with": {}
         },
-        "offer_rels_images_id_idx": {
-          "name": "offer_rels_images_id_idx",
+        "contact_rels_images_id_idx": {
+          "name": "contact_rels_images_id_idx",
           "columns": [
             {
               "expression": "images_id",
@@ -7268,8 +7393,8 @@
           "method": "btree",
           "with": {}
         },
-        "offer_rels_mux_video_id_idx": {
-          "name": "offer_rels_mux_video_id_idx",
+        "contact_rels_mux_video_id_idx": {
+          "name": "contact_rels_mux_video_id_idx",
           "columns": [
             {
               "expression": "mux_video_id",
@@ -7285,10 +7410,10 @@
         }
       },
       "foreignKeys": {
-        "offer_rels_parent_fk": {
-          "name": "offer_rels_parent_fk",
-          "tableFrom": "offer_rels",
-          "tableTo": "offer",
+        "contact_rels_parent_fk": {
+          "name": "contact_rels_parent_fk",
+          "tableFrom": "contact_rels",
+          "tableTo": "contact",
           "columnsFrom": [
             "parent_id"
           ],
@@ -7298,9 +7423,9 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "offer_rels_images_fk": {
-          "name": "offer_rels_images_fk",
-          "tableFrom": "offer_rels",
+        "contact_rels_images_fk": {
+          "name": "contact_rels_images_fk",
+          "tableFrom": "contact_rels",
           "tableTo": "images",
           "columnsFrom": [
             "images_id"
@@ -7311,9 +7436,9 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "offer_rels_mux_video_fk": {
-          "name": "offer_rels_mux_video_fk",
-          "tableFrom": "offer_rels",
+        "contact_rels_mux_video_fk": {
+          "name": "contact_rels_mux_video_fk",
+          "tableFrom": "contact_rels",
           "tableTo": "mux_video",
           "columnsFrom": [
             "mux_video_id"
@@ -7331,8 +7456,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_carousel_slides": {
-      "name": "properties_blocks_section_carousel_slides",
+    "public.portfolio_blocks_section_carousel_slides": {
+      "name": "portfolio_blocks_section_carousel_slides",
       "schema": "",
       "columns": {
         "_order": {
@@ -7380,8 +7505,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_carousel_slides_order_idx": {
-          "name": "properties_blocks_section_carousel_slides_order_idx",
+        "portfolio_blocks_section_carousel_slides_order_idx": {
+          "name": "portfolio_blocks_section_carousel_slides_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -7395,8 +7520,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_carousel_slides_parent_id_idx": {
-          "name": "properties_blocks_section_carousel_slides_parent_id_idx",
+        "portfolio_blocks_section_carousel_slides_parent_id_idx": {
+          "name": "portfolio_blocks_section_carousel_slides_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -7412,10 +7537,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_carousel_slides_parent_id_fk": {
-          "name": "properties_blocks_section_carousel_slides_parent_id_fk",
-          "tableFrom": "properties_blocks_section_carousel_slides",
-          "tableTo": "properties_blocks_section_carousel",
+        "portfolio_blocks_section_carousel_slides_parent_id_fk": {
+          "name": "portfolio_blocks_section_carousel_slides_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_carousel_slides",
+          "tableTo": "portfolio_blocks_section_carousel",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -7432,8 +7557,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_carousel": {
-      "name": "properties_blocks_section_carousel",
+    "public.portfolio_blocks_section_carousel": {
+      "name": "portfolio_blocks_section_carousel",
       "schema": "",
       "columns": {
         "_order": {
@@ -7468,8 +7593,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_carousel_order_idx": {
-          "name": "properties_blocks_section_carousel_order_idx",
+        "portfolio_blocks_section_carousel_order_idx": {
+          "name": "portfolio_blocks_section_carousel_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -7483,8 +7608,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_carousel_parent_id_idx": {
-          "name": "properties_blocks_section_carousel_parent_id_idx",
+        "portfolio_blocks_section_carousel_parent_id_idx": {
+          "name": "portfolio_blocks_section_carousel_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -7498,8 +7623,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_carousel_path_idx": {
-          "name": "properties_blocks_section_carousel_path_idx",
+        "portfolio_blocks_section_carousel_path_idx": {
+          "name": "portfolio_blocks_section_carousel_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -7515,10 +7640,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_carousel_parent_id_fk": {
-          "name": "properties_blocks_section_carousel_parent_id_fk",
-          "tableFrom": "properties_blocks_section_carousel",
-          "tableTo": "properties",
+        "portfolio_blocks_section_carousel_parent_id_fk": {
+          "name": "portfolio_blocks_section_carousel_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_carousel",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -7535,8 +7660,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_media": {
-      "name": "properties_blocks_section_media",
+    "public.portfolio_blocks_section_media": {
+      "name": "portfolio_blocks_section_media",
       "schema": "",
       "columns": {
         "_order": {
@@ -7596,8 +7721,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_media_order_idx": {
-          "name": "properties_blocks_section_media_order_idx",
+        "portfolio_blocks_section_media_order_idx": {
+          "name": "portfolio_blocks_section_media_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -7611,8 +7736,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_media_parent_id_idx": {
-          "name": "properties_blocks_section_media_parent_id_idx",
+        "portfolio_blocks_section_media_parent_id_idx": {
+          "name": "portfolio_blocks_section_media_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -7626,8 +7751,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_media_path_idx": {
-          "name": "properties_blocks_section_media_path_idx",
+        "portfolio_blocks_section_media_path_idx": {
+          "name": "portfolio_blocks_section_media_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -7643,10 +7768,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_media_parent_id_fk": {
-          "name": "properties_blocks_section_media_parent_id_fk",
-          "tableFrom": "properties_blocks_section_media",
-          "tableTo": "properties",
+        "portfolio_blocks_section_media_parent_id_fk": {
+          "name": "portfolio_blocks_section_media_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_media",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -7663,8 +7788,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_01_block": {
-      "name": "properties_blocks_section_01_block",
+    "public.portfolio_blocks_section_01_block": {
+      "name": "portfolio_blocks_section_01_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -7717,8 +7842,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_01_block_order_idx": {
-          "name": "properties_blocks_section_01_block_order_idx",
+        "portfolio_blocks_section_01_block_order_idx": {
+          "name": "portfolio_blocks_section_01_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -7732,8 +7857,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_01_block_parent_id_idx": {
-          "name": "properties_blocks_section_01_block_parent_id_idx",
+        "portfolio_blocks_section_01_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_01_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -7747,8 +7872,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_01_block_path_idx": {
-          "name": "properties_blocks_section_01_block_path_idx",
+        "portfolio_blocks_section_01_block_path_idx": {
+          "name": "portfolio_blocks_section_01_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -7764,10 +7889,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_01_block_parent_id_fk": {
-          "name": "properties_blocks_section_01_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_01_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_01_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_01_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_01_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -7784,8 +7909,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_02_block": {
-      "name": "properties_blocks_section_02_block",
+    "public.portfolio_blocks_section_02_block": {
+      "name": "portfolio_blocks_section_02_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -7832,8 +7957,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_02_block_order_idx": {
-          "name": "properties_blocks_section_02_block_order_idx",
+        "portfolio_blocks_section_02_block_order_idx": {
+          "name": "portfolio_blocks_section_02_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -7847,8 +7972,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_02_block_parent_id_idx": {
-          "name": "properties_blocks_section_02_block_parent_id_idx",
+        "portfolio_blocks_section_02_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_02_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -7862,8 +7987,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_02_block_path_idx": {
-          "name": "properties_blocks_section_02_block_path_idx",
+        "portfolio_blocks_section_02_block_path_idx": {
+          "name": "portfolio_blocks_section_02_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -7879,10 +8004,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_02_block_parent_id_fk": {
-          "name": "properties_blocks_section_02_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_02_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_02_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_02_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_02_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -7899,8 +8024,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_03_block": {
-      "name": "properties_blocks_section_03_block",
+    "public.portfolio_blocks_section_03_block": {
+      "name": "portfolio_blocks_section_03_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -7947,8 +8072,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_03_block_order_idx": {
-          "name": "properties_blocks_section_03_block_order_idx",
+        "portfolio_blocks_section_03_block_order_idx": {
+          "name": "portfolio_blocks_section_03_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -7962,8 +8087,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_03_block_parent_id_idx": {
-          "name": "properties_blocks_section_03_block_parent_id_idx",
+        "portfolio_blocks_section_03_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_03_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -7977,8 +8102,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_03_block_path_idx": {
-          "name": "properties_blocks_section_03_block_path_idx",
+        "portfolio_blocks_section_03_block_path_idx": {
+          "name": "portfolio_blocks_section_03_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -7994,10 +8119,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_03_block_parent_id_fk": {
-          "name": "properties_blocks_section_03_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_03_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_03_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_03_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_03_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -8014,8 +8139,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_04_block": {
-      "name": "properties_blocks_section_04_block",
+    "public.portfolio_blocks_section_04_block": {
+      "name": "portfolio_blocks_section_04_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -8062,8 +8187,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_04_block_order_idx": {
-          "name": "properties_blocks_section_04_block_order_idx",
+        "portfolio_blocks_section_04_block_order_idx": {
+          "name": "portfolio_blocks_section_04_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -8077,8 +8202,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_04_block_parent_id_idx": {
-          "name": "properties_blocks_section_04_block_parent_id_idx",
+        "portfolio_blocks_section_04_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_04_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -8092,8 +8217,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_04_block_path_idx": {
-          "name": "properties_blocks_section_04_block_path_idx",
+        "portfolio_blocks_section_04_block_path_idx": {
+          "name": "portfolio_blocks_section_04_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -8109,10 +8234,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_04_block_parent_id_fk": {
-          "name": "properties_blocks_section_04_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_04_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_04_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_04_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_04_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -8129,244 +8254,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_05_block": {
-      "name": "properties_blocks_section_05_block",
-      "schema": "",
-      "columns": {
-        "_order": {
-          "name": "_order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_parent_id": {
-          "name": "_parent_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_path": {
-          "name": "_path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "id": {
-          "name": "id",
-          "type": "varchar",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "heading": {
-          "name": "heading",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "copy_one": {
-          "name": "copy_one",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "copy_two": {
-          "name": "copy_two",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "block_name": {
-          "name": "block_name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {
-        "properties_blocks_section_05_block_order_idx": {
-          "name": "properties_blocks_section_05_block_order_idx",
-          "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "properties_blocks_section_05_block_parent_id_idx": {
-          "name": "properties_blocks_section_05_block_parent_id_idx",
-          "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "properties_blocks_section_05_block_path_idx": {
-          "name": "properties_blocks_section_05_block_path_idx",
-          "columns": [
-            {
-              "expression": "_path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "properties_blocks_section_05_block_parent_id_fk": {
-          "name": "properties_blocks_section_05_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_05_block",
-          "tableTo": "properties",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.properties_blocks_section_06_block": {
-      "name": "properties_blocks_section_06_block",
-      "schema": "",
-      "columns": {
-        "_order": {
-          "name": "_order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_parent_id": {
-          "name": "_parent_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_path": {
-          "name": "_path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "id": {
-          "name": "id",
-          "type": "varchar",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "copy_one": {
-          "name": "copy_one",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "copy_two": {
-          "name": "copy_two",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "block_name": {
-          "name": "block_name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {
-        "properties_blocks_section_06_block_order_idx": {
-          "name": "properties_blocks_section_06_block_order_idx",
-          "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "properties_blocks_section_06_block_parent_id_idx": {
-          "name": "properties_blocks_section_06_block_parent_id_idx",
-          "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "properties_blocks_section_06_block_path_idx": {
-          "name": "properties_blocks_section_06_block_path_idx",
-          "columns": [
-            {
-              "expression": "_path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "properties_blocks_section_06_block_parent_id_fk": {
-          "name": "properties_blocks_section_06_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_06_block",
-          "tableTo": "properties",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.properties_blocks_section_07_block": {
-      "name": "properties_blocks_section_07_block",
+    "public.portfolio_blocks_section_05_block": {
+      "name": "portfolio_blocks_section_05_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -8419,8 +8308,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_07_block_order_idx": {
-          "name": "properties_blocks_section_07_block_order_idx",
+        "portfolio_blocks_section_05_block_order_idx": {
+          "name": "portfolio_blocks_section_05_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -8434,8 +8323,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_07_block_parent_id_idx": {
-          "name": "properties_blocks_section_07_block_parent_id_idx",
+        "portfolio_blocks_section_05_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_05_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -8449,8 +8338,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_07_block_path_idx": {
-          "name": "properties_blocks_section_07_block_path_idx",
+        "portfolio_blocks_section_05_block_path_idx": {
+          "name": "portfolio_blocks_section_05_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -8466,10 +8355,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_07_block_parent_id_fk": {
-          "name": "properties_blocks_section_07_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_07_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_05_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_05_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_05_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -8486,8 +8375,123 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_08_block": {
-      "name": "properties_blocks_section_08_block",
+    "public.portfolio_blocks_section_06_block": {
+      "name": "portfolio_blocks_section_06_block",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_path": {
+          "name": "_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "copy_one": {
+          "name": "copy_one",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "copy_two": {
+          "name": "copy_two",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_name": {
+          "name": "block_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "portfolio_blocks_section_06_block_order_idx": {
+          "name": "portfolio_blocks_section_06_block_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "portfolio_blocks_section_06_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_06_block_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "portfolio_blocks_section_06_block_path_idx": {
+          "name": "portfolio_blocks_section_06_block_path_idx",
+          "columns": [
+            {
+              "expression": "_path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "portfolio_blocks_section_06_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_06_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_06_block",
+          "tableTo": "portfolio",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.portfolio_blocks_section_07_block": {
+      "name": "portfolio_blocks_section_07_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -8540,8 +8544,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_08_block_order_idx": {
-          "name": "properties_blocks_section_08_block_order_idx",
+        "portfolio_blocks_section_07_block_order_idx": {
+          "name": "portfolio_blocks_section_07_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -8555,8 +8559,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_08_block_parent_id_idx": {
-          "name": "properties_blocks_section_08_block_parent_id_idx",
+        "portfolio_blocks_section_07_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_07_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -8570,8 +8574,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_08_block_path_idx": {
-          "name": "properties_blocks_section_08_block_path_idx",
+        "portfolio_blocks_section_07_block_path_idx": {
+          "name": "portfolio_blocks_section_07_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -8587,10 +8591,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_08_block_parent_id_fk": {
-          "name": "properties_blocks_section_08_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_08_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_07_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_07_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_07_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -8607,123 +8611,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_09_block": {
-      "name": "properties_blocks_section_09_block",
-      "schema": "",
-      "columns": {
-        "_order": {
-          "name": "_order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_parent_id": {
-          "name": "_parent_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_path": {
-          "name": "_path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "id": {
-          "name": "id",
-          "type": "varchar",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "heading": {
-          "name": "heading",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "copy_one": {
-          "name": "copy_one",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "block_name": {
-          "name": "block_name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {
-        "properties_blocks_section_09_block_order_idx": {
-          "name": "properties_blocks_section_09_block_order_idx",
-          "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "properties_blocks_section_09_block_parent_id_idx": {
-          "name": "properties_blocks_section_09_block_parent_id_idx",
-          "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "properties_blocks_section_09_block_path_idx": {
-          "name": "properties_blocks_section_09_block_path_idx",
-          "columns": [
-            {
-              "expression": "_path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "properties_blocks_section_09_block_parent_id_fk": {
-          "name": "properties_blocks_section_09_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_09_block",
-          "tableTo": "properties",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.properties_blocks_section_10_block": {
-      "name": "properties_blocks_section_10_block",
+    "public.portfolio_blocks_section_08_block": {
+      "name": "portfolio_blocks_section_08_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -8776,8 +8665,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_10_block_order_idx": {
-          "name": "properties_blocks_section_10_block_order_idx",
+        "portfolio_blocks_section_08_block_order_idx": {
+          "name": "portfolio_blocks_section_08_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -8791,8 +8680,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_10_block_parent_id_idx": {
-          "name": "properties_blocks_section_10_block_parent_id_idx",
+        "portfolio_blocks_section_08_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_08_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -8806,8 +8695,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_10_block_path_idx": {
-          "name": "properties_blocks_section_10_block_path_idx",
+        "portfolio_blocks_section_08_block_path_idx": {
+          "name": "portfolio_blocks_section_08_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -8823,10 +8712,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_10_block_parent_id_fk": {
-          "name": "properties_blocks_section_10_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_10_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_08_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_08_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_08_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -8843,8 +8732,244 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_11_block_slides": {
-      "name": "properties_blocks_section_11_block_slides",
+    "public.portfolio_blocks_section_09_block": {
+      "name": "portfolio_blocks_section_09_block",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_path": {
+          "name": "_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "heading": {
+          "name": "heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "copy_one": {
+          "name": "copy_one",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_name": {
+          "name": "block_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "portfolio_blocks_section_09_block_order_idx": {
+          "name": "portfolio_blocks_section_09_block_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "portfolio_blocks_section_09_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_09_block_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "portfolio_blocks_section_09_block_path_idx": {
+          "name": "portfolio_blocks_section_09_block_path_idx",
+          "columns": [
+            {
+              "expression": "_path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "portfolio_blocks_section_09_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_09_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_09_block",
+          "tableTo": "portfolio",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.portfolio_blocks_section_10_block": {
+      "name": "portfolio_blocks_section_10_block",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_path": {
+          "name": "_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "heading": {
+          "name": "heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "copy_one": {
+          "name": "copy_one",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "copy_two": {
+          "name": "copy_two",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_name": {
+          "name": "block_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "portfolio_blocks_section_10_block_order_idx": {
+          "name": "portfolio_blocks_section_10_block_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "portfolio_blocks_section_10_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_10_block_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "portfolio_blocks_section_10_block_path_idx": {
+          "name": "portfolio_blocks_section_10_block_path_idx",
+          "columns": [
+            {
+              "expression": "_path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "portfolio_blocks_section_10_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_10_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_10_block",
+          "tableTo": "portfolio",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.portfolio_blocks_section_11_block_slides": {
+      "name": "portfolio_blocks_section_11_block_slides",
       "schema": "",
       "columns": {
         "_order": {
@@ -8892,8 +9017,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_11_block_slides_order_idx": {
-          "name": "properties_blocks_section_11_block_slides_order_idx",
+        "portfolio_blocks_section_11_block_slides_order_idx": {
+          "name": "portfolio_blocks_section_11_block_slides_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -8907,8 +9032,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_11_block_slides_parent_id_idx": {
-          "name": "properties_blocks_section_11_block_slides_parent_id_idx",
+        "portfolio_blocks_section_11_block_slides_parent_id_idx": {
+          "name": "portfolio_blocks_section_11_block_slides_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -8924,10 +9049,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_11_block_slides_parent_id_fk": {
-          "name": "properties_blocks_section_11_block_slides_parent_id_fk",
-          "tableFrom": "properties_blocks_section_11_block_slides",
-          "tableTo": "properties_blocks_section_11_block",
+        "portfolio_blocks_section_11_block_slides_parent_id_fk": {
+          "name": "portfolio_blocks_section_11_block_slides_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_11_block_slides",
+          "tableTo": "portfolio_blocks_section_11_block",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -8944,8 +9069,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_11_block": {
-      "name": "properties_blocks_section_11_block",
+    "public.portfolio_blocks_section_11_block": {
+      "name": "portfolio_blocks_section_11_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -8980,8 +9105,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_11_block_order_idx": {
-          "name": "properties_blocks_section_11_block_order_idx",
+        "portfolio_blocks_section_11_block_order_idx": {
+          "name": "portfolio_blocks_section_11_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -8995,8 +9120,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_11_block_parent_id_idx": {
-          "name": "properties_blocks_section_11_block_parent_id_idx",
+        "portfolio_blocks_section_11_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_11_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -9010,8 +9135,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_11_block_path_idx": {
-          "name": "properties_blocks_section_11_block_path_idx",
+        "portfolio_blocks_section_11_block_path_idx": {
+          "name": "portfolio_blocks_section_11_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -9027,10 +9152,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_11_block_parent_id_fk": {
-          "name": "properties_blocks_section_11_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_11_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_11_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_11_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_11_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -9047,8 +9172,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_12_block": {
-      "name": "properties_blocks_section_12_block",
+    "public.portfolio_blocks_section_12_block": {
+      "name": "portfolio_blocks_section_12_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -9095,8 +9220,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_12_block_order_idx": {
-          "name": "properties_blocks_section_12_block_order_idx",
+        "portfolio_blocks_section_12_block_order_idx": {
+          "name": "portfolio_blocks_section_12_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -9110,8 +9235,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_12_block_parent_id_idx": {
-          "name": "properties_blocks_section_12_block_parent_id_idx",
+        "portfolio_blocks_section_12_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_12_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -9125,8 +9250,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_12_block_path_idx": {
-          "name": "properties_blocks_section_12_block_path_idx",
+        "portfolio_blocks_section_12_block_path_idx": {
+          "name": "portfolio_blocks_section_12_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -9142,10 +9267,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_12_block_parent_id_fk": {
-          "name": "properties_blocks_section_12_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_12_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_12_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_12_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_12_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -9162,8 +9287,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_13_block_panels_items": {
-      "name": "properties_blocks_section_13_block_panels_items",
+    "public.portfolio_blocks_section_13_block_panels_items": {
+      "name": "portfolio_blocks_section_13_block_panels_items",
       "schema": "",
       "columns": {
         "_order": {
@@ -9198,8 +9323,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_13_block_panels_items_order_idx": {
-          "name": "properties_blocks_section_13_block_panels_items_order_idx",
+        "portfolio_blocks_section_13_block_panels_items_order_idx": {
+          "name": "portfolio_blocks_section_13_block_panels_items_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -9213,8 +9338,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_13_block_panels_items_parent_id_idx": {
-          "name": "properties_blocks_section_13_block_panels_items_parent_id_idx",
+        "portfolio_blocks_section_13_block_panels_items_parent_id_idx": {
+          "name": "portfolio_blocks_section_13_block_panels_items_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -9230,10 +9355,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_13_block_panels_items_parent_id_fk": {
-          "name": "properties_blocks_section_13_block_panels_items_parent_id_fk",
-          "tableFrom": "properties_blocks_section_13_block_panels_items",
-          "tableTo": "properties_blocks_section_13_block_panels",
+        "portfolio_blocks_section_13_block_panels_items_parent_id_fk": {
+          "name": "portfolio_blocks_section_13_block_panels_items_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_13_block_panels_items",
+          "tableTo": "portfolio_blocks_section_13_block_panels",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -9250,8 +9375,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_13_block_panels": {
-      "name": "properties_blocks_section_13_block_panels",
+    "public.portfolio_blocks_section_13_block_panels": {
+      "name": "portfolio_blocks_section_13_block_panels",
       "schema": "",
       "columns": {
         "_order": {
@@ -9310,8 +9435,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_13_block_panels_order_idx": {
-          "name": "properties_blocks_section_13_block_panels_order_idx",
+        "portfolio_blocks_section_13_block_panels_order_idx": {
+          "name": "portfolio_blocks_section_13_block_panels_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -9325,8 +9450,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_13_block_panels_parent_id_idx": {
-          "name": "properties_blocks_section_13_block_panels_parent_id_idx",
+        "portfolio_blocks_section_13_block_panels_parent_id_idx": {
+          "name": "portfolio_blocks_section_13_block_panels_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -9342,10 +9467,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_13_block_panels_parent_id_fk": {
-          "name": "properties_blocks_section_13_block_panels_parent_id_fk",
-          "tableFrom": "properties_blocks_section_13_block_panels",
-          "tableTo": "properties_blocks_section_13_block",
+        "portfolio_blocks_section_13_block_panels_parent_id_fk": {
+          "name": "portfolio_blocks_section_13_block_panels_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_13_block_panels",
+          "tableTo": "portfolio_blocks_section_13_block",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -9362,8 +9487,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_13_block": {
-      "name": "properties_blocks_section_13_block",
+    "public.portfolio_blocks_section_13_block": {
+      "name": "portfolio_blocks_section_13_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -9398,8 +9523,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_13_block_order_idx": {
-          "name": "properties_blocks_section_13_block_order_idx",
+        "portfolio_blocks_section_13_block_order_idx": {
+          "name": "portfolio_blocks_section_13_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -9413,8 +9538,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_13_block_parent_id_idx": {
-          "name": "properties_blocks_section_13_block_parent_id_idx",
+        "portfolio_blocks_section_13_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_13_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -9428,8 +9553,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_13_block_path_idx": {
-          "name": "properties_blocks_section_13_block_path_idx",
+        "portfolio_blocks_section_13_block_path_idx": {
+          "name": "portfolio_blocks_section_13_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -9445,10 +9570,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_13_block_parent_id_fk": {
-          "name": "properties_blocks_section_13_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_13_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_13_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_13_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_13_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -9465,8 +9590,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_14_block_slides": {
-      "name": "properties_blocks_section_14_block_slides",
+    "public.portfolio_blocks_section_14_block_slides": {
+      "name": "portfolio_blocks_section_14_block_slides",
       "schema": "",
       "columns": {
         "_order": {
@@ -9514,8 +9639,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_14_block_slides_order_idx": {
-          "name": "properties_blocks_section_14_block_slides_order_idx",
+        "portfolio_blocks_section_14_block_slides_order_idx": {
+          "name": "portfolio_blocks_section_14_block_slides_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -9529,8 +9654,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_14_block_slides_parent_id_idx": {
-          "name": "properties_blocks_section_14_block_slides_parent_id_idx",
+        "portfolio_blocks_section_14_block_slides_parent_id_idx": {
+          "name": "portfolio_blocks_section_14_block_slides_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -9546,10 +9671,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_14_block_slides_parent_id_fk": {
-          "name": "properties_blocks_section_14_block_slides_parent_id_fk",
-          "tableFrom": "properties_blocks_section_14_block_slides",
-          "tableTo": "properties_blocks_section_14_block",
+        "portfolio_blocks_section_14_block_slides_parent_id_fk": {
+          "name": "portfolio_blocks_section_14_block_slides_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_14_block_slides",
+          "tableTo": "portfolio_blocks_section_14_block",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -9566,8 +9691,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_14_block": {
-      "name": "properties_blocks_section_14_block",
+    "public.portfolio_blocks_section_14_block": {
+      "name": "portfolio_blocks_section_14_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -9608,8 +9733,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_14_block_order_idx": {
-          "name": "properties_blocks_section_14_block_order_idx",
+        "portfolio_blocks_section_14_block_order_idx": {
+          "name": "portfolio_blocks_section_14_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -9623,8 +9748,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_14_block_parent_id_idx": {
-          "name": "properties_blocks_section_14_block_parent_id_idx",
+        "portfolio_blocks_section_14_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_14_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -9638,8 +9763,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_14_block_path_idx": {
-          "name": "properties_blocks_section_14_block_path_idx",
+        "portfolio_blocks_section_14_block_path_idx": {
+          "name": "portfolio_blocks_section_14_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -9655,10 +9780,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_14_block_parent_id_fk": {
-          "name": "properties_blocks_section_14_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_14_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_14_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_14_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_14_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -9675,8 +9800,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_15_block_slides": {
-      "name": "properties_blocks_section_15_block_slides",
+    "public.portfolio_blocks_section_15_block_slides": {
+      "name": "portfolio_blocks_section_15_block_slides",
       "schema": "",
       "columns": {
         "_order": {
@@ -9724,8 +9849,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_15_block_slides_order_idx": {
-          "name": "properties_blocks_section_15_block_slides_order_idx",
+        "portfolio_blocks_section_15_block_slides_order_idx": {
+          "name": "portfolio_blocks_section_15_block_slides_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -9739,8 +9864,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_15_block_slides_parent_id_idx": {
-          "name": "properties_blocks_section_15_block_slides_parent_id_idx",
+        "portfolio_blocks_section_15_block_slides_parent_id_idx": {
+          "name": "portfolio_blocks_section_15_block_slides_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -9756,10 +9881,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_15_block_slides_parent_id_fk": {
-          "name": "properties_blocks_section_15_block_slides_parent_id_fk",
-          "tableFrom": "properties_blocks_section_15_block_slides",
-          "tableTo": "properties_blocks_section_15_block",
+        "portfolio_blocks_section_15_block_slides_parent_id_fk": {
+          "name": "portfolio_blocks_section_15_block_slides_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_15_block_slides",
+          "tableTo": "portfolio_blocks_section_15_block",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -9776,8 +9901,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_15_block": {
-      "name": "properties_blocks_section_15_block",
+    "public.portfolio_blocks_section_15_block": {
+      "name": "portfolio_blocks_section_15_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -9830,8 +9955,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_15_block_order_idx": {
-          "name": "properties_blocks_section_15_block_order_idx",
+        "portfolio_blocks_section_15_block_order_idx": {
+          "name": "portfolio_blocks_section_15_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -9845,8 +9970,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_15_block_parent_id_idx": {
-          "name": "properties_blocks_section_15_block_parent_id_idx",
+        "portfolio_blocks_section_15_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_15_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -9860,8 +9985,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_15_block_path_idx": {
-          "name": "properties_blocks_section_15_block_path_idx",
+        "portfolio_blocks_section_15_block_path_idx": {
+          "name": "portfolio_blocks_section_15_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -9877,10 +10002,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_15_block_parent_id_fk": {
-          "name": "properties_blocks_section_15_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_15_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_15_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_15_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_15_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -9897,8 +10022,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_16_block": {
-      "name": "properties_blocks_section_16_block",
+    "public.portfolio_blocks_section_16_block": {
+      "name": "portfolio_blocks_section_16_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -9945,8 +10070,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_16_block_order_idx": {
-          "name": "properties_blocks_section_16_block_order_idx",
+        "portfolio_blocks_section_16_block_order_idx": {
+          "name": "portfolio_blocks_section_16_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -9960,8 +10085,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_16_block_parent_id_idx": {
-          "name": "properties_blocks_section_16_block_parent_id_idx",
+        "portfolio_blocks_section_16_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_16_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -9975,8 +10100,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_16_block_path_idx": {
-          "name": "properties_blocks_section_16_block_path_idx",
+        "portfolio_blocks_section_16_block_path_idx": {
+          "name": "portfolio_blocks_section_16_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -9992,10 +10117,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_16_block_parent_id_fk": {
-          "name": "properties_blocks_section_16_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_16_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_16_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_16_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_16_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -10012,8 +10137,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_17_block_milestones": {
-      "name": "properties_blocks_section_17_block_milestones",
+    "public.portfolio_blocks_section_17_block_milestones": {
+      "name": "portfolio_blocks_section_17_block_milestones",
       "schema": "",
       "columns": {
         "_order": {
@@ -10048,8 +10173,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_17_block_milestones_order_idx": {
-          "name": "properties_blocks_section_17_block_milestones_order_idx",
+        "portfolio_blocks_section_17_block_milestones_order_idx": {
+          "name": "portfolio_blocks_section_17_block_milestones_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -10063,8 +10188,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_17_block_milestones_parent_id_idx": {
-          "name": "properties_blocks_section_17_block_milestones_parent_id_idx",
+        "portfolio_blocks_section_17_block_milestones_parent_id_idx": {
+          "name": "portfolio_blocks_section_17_block_milestones_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -10080,10 +10205,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_17_block_milestones_parent_id_fk": {
-          "name": "properties_blocks_section_17_block_milestones_parent_id_fk",
-          "tableFrom": "properties_blocks_section_17_block_milestones",
-          "tableTo": "properties_blocks_section_17_block",
+        "portfolio_blocks_section_17_block_milestones_parent_id_fk": {
+          "name": "portfolio_blocks_section_17_block_milestones_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_17_block_milestones",
+          "tableTo": "portfolio_blocks_section_17_block",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -10100,8 +10225,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_17_block": {
-      "name": "properties_blocks_section_17_block",
+    "public.portfolio_blocks_section_17_block": {
+      "name": "portfolio_blocks_section_17_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -10154,8 +10279,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_17_block_order_idx": {
-          "name": "properties_blocks_section_17_block_order_idx",
+        "portfolio_blocks_section_17_block_order_idx": {
+          "name": "portfolio_blocks_section_17_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -10169,8 +10294,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_17_block_parent_id_idx": {
-          "name": "properties_blocks_section_17_block_parent_id_idx",
+        "portfolio_blocks_section_17_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_17_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -10184,8 +10309,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_17_block_path_idx": {
-          "name": "properties_blocks_section_17_block_path_idx",
+        "portfolio_blocks_section_17_block_path_idx": {
+          "name": "portfolio_blocks_section_17_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -10201,10 +10326,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_17_block_parent_id_fk": {
-          "name": "properties_blocks_section_17_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_17_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_17_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_17_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_17_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -10221,8 +10346,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_18_block_panels_slides": {
-      "name": "properties_blocks_section_18_block_panels_slides",
+    "public.portfolio_blocks_section_18_block_panels_slides": {
+      "name": "portfolio_blocks_section_18_block_panels_slides",
       "schema": "",
       "columns": {
         "_order": {
@@ -10270,8 +10395,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_18_block_panels_slides_order_idx": {
-          "name": "properties_blocks_section_18_block_panels_slides_order_idx",
+        "portfolio_blocks_section_18_block_panels_slides_order_idx": {
+          "name": "portfolio_blocks_section_18_block_panels_slides_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -10285,8 +10410,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_18_block_panels_slides_parent_id_idx": {
-          "name": "properties_blocks_section_18_block_panels_slides_parent_id_idx",
+        "portfolio_blocks_section_18_block_panels_slides_parent_id_idx": {
+          "name": "portfolio_blocks_section_18_block_panels_slides_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -10302,10 +10427,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_18_block_panels_slides_parent_id_fk": {
-          "name": "properties_blocks_section_18_block_panels_slides_parent_id_fk",
-          "tableFrom": "properties_blocks_section_18_block_panels_slides",
-          "tableTo": "properties_blocks_section_18_block_panels",
+        "portfolio_blocks_section_18_block_panels_slides_parent_id_fk": {
+          "name": "portfolio_blocks_section_18_block_panels_slides_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_18_block_panels_slides",
+          "tableTo": "portfolio_blocks_section_18_block_panels",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -10322,8 +10447,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_18_block_panels": {
-      "name": "properties_blocks_section_18_block_panels",
+    "public.portfolio_blocks_section_18_block_panels": {
+      "name": "portfolio_blocks_section_18_block_panels",
       "schema": "",
       "columns": {
         "_order": {
@@ -10382,8 +10507,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_18_block_panels_order_idx": {
-          "name": "properties_blocks_section_18_block_panels_order_idx",
+        "portfolio_blocks_section_18_block_panels_order_idx": {
+          "name": "portfolio_blocks_section_18_block_panels_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -10397,8 +10522,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_18_block_panels_parent_id_idx": {
-          "name": "properties_blocks_section_18_block_panels_parent_id_idx",
+        "portfolio_blocks_section_18_block_panels_parent_id_idx": {
+          "name": "portfolio_blocks_section_18_block_panels_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -10414,10 +10539,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_18_block_panels_parent_id_fk": {
-          "name": "properties_blocks_section_18_block_panels_parent_id_fk",
-          "tableFrom": "properties_blocks_section_18_block_panels",
-          "tableTo": "properties_blocks_section_18_block",
+        "portfolio_blocks_section_18_block_panels_parent_id_fk": {
+          "name": "portfolio_blocks_section_18_block_panels_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_18_block_panels",
+          "tableTo": "portfolio_blocks_section_18_block",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -10434,8 +10559,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_18_block": {
-      "name": "properties_blocks_section_18_block",
+    "public.portfolio_blocks_section_18_block": {
+      "name": "portfolio_blocks_section_18_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -10470,8 +10595,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_18_block_order_idx": {
-          "name": "properties_blocks_section_18_block_order_idx",
+        "portfolio_blocks_section_18_block_order_idx": {
+          "name": "portfolio_blocks_section_18_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -10485,8 +10610,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_18_block_parent_id_idx": {
-          "name": "properties_blocks_section_18_block_parent_id_idx",
+        "portfolio_blocks_section_18_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_18_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -10500,8 +10625,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_18_block_path_idx": {
-          "name": "properties_blocks_section_18_block_path_idx",
+        "portfolio_blocks_section_18_block_path_idx": {
+          "name": "portfolio_blocks_section_18_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -10517,10 +10642,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_18_block_parent_id_fk": {
-          "name": "properties_blocks_section_18_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_18_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_18_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_18_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_18_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -10537,8 +10662,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_19_block": {
-      "name": "properties_blocks_section_19_block",
+    "public.portfolio_blocks_section_19_block": {
+      "name": "portfolio_blocks_section_19_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -10585,8 +10710,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_19_block_order_idx": {
-          "name": "properties_blocks_section_19_block_order_idx",
+        "portfolio_blocks_section_19_block_order_idx": {
+          "name": "portfolio_blocks_section_19_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -10600,8 +10725,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_19_block_parent_id_idx": {
-          "name": "properties_blocks_section_19_block_parent_id_idx",
+        "portfolio_blocks_section_19_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_19_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -10615,8 +10740,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_19_block_path_idx": {
-          "name": "properties_blocks_section_19_block_path_idx",
+        "portfolio_blocks_section_19_block_path_idx": {
+          "name": "portfolio_blocks_section_19_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -10632,10 +10757,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_19_block_parent_id_fk": {
-          "name": "properties_blocks_section_19_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_19_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_19_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_19_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_19_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -10652,8 +10777,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_20_block": {
-      "name": "properties_blocks_section_20_block",
+    "public.portfolio_blocks_section_20_block": {
+      "name": "portfolio_blocks_section_20_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -10688,8 +10813,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_20_block_order_idx": {
-          "name": "properties_blocks_section_20_block_order_idx",
+        "portfolio_blocks_section_20_block_order_idx": {
+          "name": "portfolio_blocks_section_20_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -10703,8 +10828,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_20_block_parent_id_idx": {
-          "name": "properties_blocks_section_20_block_parent_id_idx",
+        "portfolio_blocks_section_20_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_20_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -10718,8 +10843,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_20_block_path_idx": {
-          "name": "properties_blocks_section_20_block_path_idx",
+        "portfolio_blocks_section_20_block_path_idx": {
+          "name": "portfolio_blocks_section_20_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -10735,10 +10860,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_20_block_parent_id_fk": {
-          "name": "properties_blocks_section_20_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_20_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_20_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_20_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_20_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -10755,123 +10880,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_21_block": {
-      "name": "properties_blocks_section_21_block",
-      "schema": "",
-      "columns": {
-        "_order": {
-          "name": "_order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_parent_id": {
-          "name": "_parent_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "_path": {
-          "name": "_path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "id": {
-          "name": "id",
-          "type": "varchar",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "copy_one": {
-          "name": "copy_one",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "copy_two": {
-          "name": "copy_two",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "block_name": {
-          "name": "block_name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {
-        "properties_blocks_section_21_block_order_idx": {
-          "name": "properties_blocks_section_21_block_order_idx",
-          "columns": [
-            {
-              "expression": "_order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "properties_blocks_section_21_block_parent_id_idx": {
-          "name": "properties_blocks_section_21_block_parent_id_idx",
-          "columns": [
-            {
-              "expression": "_parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "properties_blocks_section_21_block_path_idx": {
-          "name": "properties_blocks_section_21_block_path_idx",
-          "columns": [
-            {
-              "expression": "_path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "properties_blocks_section_21_block_parent_id_fk": {
-          "name": "properties_blocks_section_21_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_21_block",
-          "tableTo": "properties",
-          "columnsFrom": [
-            "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.properties_blocks_section_22_block": {
-      "name": "properties_blocks_section_22_block",
+    "public.portfolio_blocks_section_21_block": {
+      "name": "portfolio_blocks_section_21_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -10918,8 +10928,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_22_block_order_idx": {
-          "name": "properties_blocks_section_22_block_order_idx",
+        "portfolio_blocks_section_21_block_order_idx": {
+          "name": "portfolio_blocks_section_21_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -10933,8 +10943,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_22_block_parent_id_idx": {
-          "name": "properties_blocks_section_22_block_parent_id_idx",
+        "portfolio_blocks_section_21_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_21_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -10948,8 +10958,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_22_block_path_idx": {
-          "name": "properties_blocks_section_22_block_path_idx",
+        "portfolio_blocks_section_21_block_path_idx": {
+          "name": "portfolio_blocks_section_21_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -10965,10 +10975,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_22_block_parent_id_fk": {
-          "name": "properties_blocks_section_22_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_22_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_21_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_21_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_21_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -10985,8 +10995,123 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_23_block": {
-      "name": "properties_blocks_section_23_block",
+    "public.portfolio_blocks_section_22_block": {
+      "name": "portfolio_blocks_section_22_block",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_path": {
+          "name": "_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "copy_one": {
+          "name": "copy_one",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "copy_two": {
+          "name": "copy_two",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_name": {
+          "name": "block_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "portfolio_blocks_section_22_block_order_idx": {
+          "name": "portfolio_blocks_section_22_block_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "portfolio_blocks_section_22_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_22_block_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "portfolio_blocks_section_22_block_path_idx": {
+          "name": "portfolio_blocks_section_22_block_path_idx",
+          "columns": [
+            {
+              "expression": "_path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "portfolio_blocks_section_22_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_22_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_22_block",
+          "tableTo": "portfolio",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.portfolio_blocks_section_23_block": {
+      "name": "portfolio_blocks_section_23_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -11039,8 +11164,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_23_block_order_idx": {
-          "name": "properties_blocks_section_23_block_order_idx",
+        "portfolio_blocks_section_23_block_order_idx": {
+          "name": "portfolio_blocks_section_23_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -11054,8 +11179,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_23_block_parent_id_idx": {
-          "name": "properties_blocks_section_23_block_parent_id_idx",
+        "portfolio_blocks_section_23_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_23_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -11069,8 +11194,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_23_block_path_idx": {
-          "name": "properties_blocks_section_23_block_path_idx",
+        "portfolio_blocks_section_23_block_path_idx": {
+          "name": "portfolio_blocks_section_23_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -11086,10 +11211,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_23_block_parent_id_fk": {
-          "name": "properties_blocks_section_23_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_23_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_23_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_23_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_23_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -11106,8 +11231,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_24_block_slides": {
-      "name": "properties_blocks_section_24_block_slides",
+    "public.portfolio_blocks_section_24_block_slides": {
+      "name": "portfolio_blocks_section_24_block_slides",
       "schema": "",
       "columns": {
         "_order": {
@@ -11155,8 +11280,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_24_block_slides_order_idx": {
-          "name": "properties_blocks_section_24_block_slides_order_idx",
+        "portfolio_blocks_section_24_block_slides_order_idx": {
+          "name": "portfolio_blocks_section_24_block_slides_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -11170,8 +11295,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_24_block_slides_parent_id_idx": {
-          "name": "properties_blocks_section_24_block_slides_parent_id_idx",
+        "portfolio_blocks_section_24_block_slides_parent_id_idx": {
+          "name": "portfolio_blocks_section_24_block_slides_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -11187,10 +11312,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_24_block_slides_parent_id_fk": {
-          "name": "properties_blocks_section_24_block_slides_parent_id_fk",
-          "tableFrom": "properties_blocks_section_24_block_slides",
-          "tableTo": "properties_blocks_section_24_block",
+        "portfolio_blocks_section_24_block_slides_parent_id_fk": {
+          "name": "portfolio_blocks_section_24_block_slides_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_24_block_slides",
+          "tableTo": "portfolio_blocks_section_24_block",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -11207,8 +11332,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_24_block": {
-      "name": "properties_blocks_section_24_block",
+    "public.portfolio_blocks_section_24_block": {
+      "name": "portfolio_blocks_section_24_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -11243,8 +11368,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_24_block_order_idx": {
-          "name": "properties_blocks_section_24_block_order_idx",
+        "portfolio_blocks_section_24_block_order_idx": {
+          "name": "portfolio_blocks_section_24_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -11258,8 +11383,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_24_block_parent_id_idx": {
-          "name": "properties_blocks_section_24_block_parent_id_idx",
+        "portfolio_blocks_section_24_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_24_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -11273,8 +11398,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_24_block_path_idx": {
-          "name": "properties_blocks_section_24_block_path_idx",
+        "portfolio_blocks_section_24_block_path_idx": {
+          "name": "portfolio_blocks_section_24_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -11290,10 +11415,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_24_block_parent_id_fk": {
-          "name": "properties_blocks_section_24_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_24_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_24_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_24_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_24_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -11310,8 +11435,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_separator_block": {
-      "name": "properties_blocks_section_separator_block",
+    "public.portfolio_blocks_section_separator_block": {
+      "name": "portfolio_blocks_section_separator_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -11353,8 +11478,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_separator_block_order_idx": {
-          "name": "properties_blocks_section_separator_block_order_idx",
+        "portfolio_blocks_section_separator_block_order_idx": {
+          "name": "portfolio_blocks_section_separator_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -11368,8 +11493,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_separator_block_parent_id_idx": {
-          "name": "properties_blocks_section_separator_block_parent_id_idx",
+        "portfolio_blocks_section_separator_block_parent_id_idx": {
+          "name": "portfolio_blocks_section_separator_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -11383,8 +11508,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_separator_block_path_idx": {
-          "name": "properties_blocks_section_separator_block_path_idx",
+        "portfolio_blocks_section_separator_block_path_idx": {
+          "name": "portfolio_blocks_section_separator_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -11400,10 +11525,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_separator_block_parent_id_fk": {
-          "name": "properties_blocks_section_separator_block_parent_id_fk",
-          "tableFrom": "properties_blocks_section_separator_block",
-          "tableTo": "properties",
+        "portfolio_blocks_section_separator_block_parent_id_fk": {
+          "name": "portfolio_blocks_section_separator_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_separator_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -11420,8 +11545,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_full_screen_block": {
-      "name": "properties_blocks_full_screen_block",
+    "public.portfolio_blocks_full_screen_block": {
+      "name": "portfolio_blocks_full_screen_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -11456,8 +11581,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_full_screen_block_order_idx": {
-          "name": "properties_blocks_full_screen_block_order_idx",
+        "portfolio_blocks_full_screen_block_order_idx": {
+          "name": "portfolio_blocks_full_screen_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -11471,8 +11596,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_full_screen_block_parent_id_idx": {
-          "name": "properties_blocks_full_screen_block_parent_id_idx",
+        "portfolio_blocks_full_screen_block_parent_id_idx": {
+          "name": "portfolio_blocks_full_screen_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -11486,8 +11611,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_full_screen_block_path_idx": {
-          "name": "properties_blocks_full_screen_block_path_idx",
+        "portfolio_blocks_full_screen_block_path_idx": {
+          "name": "portfolio_blocks_full_screen_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -11503,10 +11628,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_full_screen_block_parent_id_fk": {
-          "name": "properties_blocks_full_screen_block_parent_id_fk",
-          "tableFrom": "properties_blocks_full_screen_block",
-          "tableTo": "properties",
+        "portfolio_blocks_full_screen_block_parent_id_fk": {
+          "name": "portfolio_blocks_full_screen_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_full_screen_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -11523,8 +11648,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_carousel_block_slides": {
-      "name": "properties_blocks_carousel_block_slides",
+    "public.portfolio_blocks_carousel_block_slides": {
+      "name": "portfolio_blocks_carousel_block_slides",
       "schema": "",
       "columns": {
         "_order": {
@@ -11572,8 +11697,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_carousel_block_slides_order_idx": {
-          "name": "properties_blocks_carousel_block_slides_order_idx",
+        "portfolio_blocks_carousel_block_slides_order_idx": {
+          "name": "portfolio_blocks_carousel_block_slides_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -11587,8 +11712,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_carousel_block_slides_parent_id_idx": {
-          "name": "properties_blocks_carousel_block_slides_parent_id_idx",
+        "portfolio_blocks_carousel_block_slides_parent_id_idx": {
+          "name": "portfolio_blocks_carousel_block_slides_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -11604,10 +11729,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_carousel_block_slides_parent_id_fk": {
-          "name": "properties_blocks_carousel_block_slides_parent_id_fk",
-          "tableFrom": "properties_blocks_carousel_block_slides",
-          "tableTo": "properties_blocks_carousel_block",
+        "portfolio_blocks_carousel_block_slides_parent_id_fk": {
+          "name": "portfolio_blocks_carousel_block_slides_parent_id_fk",
+          "tableFrom": "portfolio_blocks_carousel_block_slides",
+          "tableTo": "portfolio_blocks_carousel_block",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -11624,8 +11749,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_carousel_block": {
-      "name": "properties_blocks_carousel_block",
+    "public.portfolio_blocks_carousel_block": {
+      "name": "portfolio_blocks_carousel_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -11660,8 +11785,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_carousel_block_order_idx": {
-          "name": "properties_blocks_carousel_block_order_idx",
+        "portfolio_blocks_carousel_block_order_idx": {
+          "name": "portfolio_blocks_carousel_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -11675,8 +11800,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_carousel_block_parent_id_idx": {
-          "name": "properties_blocks_carousel_block_parent_id_idx",
+        "portfolio_blocks_carousel_block_parent_id_idx": {
+          "name": "portfolio_blocks_carousel_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -11690,8 +11815,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_carousel_block_path_idx": {
-          "name": "properties_blocks_carousel_block_path_idx",
+        "portfolio_blocks_carousel_block_path_idx": {
+          "name": "portfolio_blocks_carousel_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -11707,10 +11832,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_carousel_block_parent_id_fk": {
-          "name": "properties_blocks_carousel_block_parent_id_fk",
-          "tableFrom": "properties_blocks_carousel_block",
-          "tableTo": "properties",
+        "portfolio_blocks_carousel_block_parent_id_fk": {
+          "name": "portfolio_blocks_carousel_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_carousel_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -11727,8 +11852,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_questions_block_questions": {
-      "name": "properties_blocks_questions_block_questions",
+    "public.portfolio_blocks_questions_block_questions": {
+      "name": "portfolio_blocks_questions_block_questions",
       "schema": "",
       "columns": {
         "_order": {
@@ -11763,8 +11888,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_questions_block_questions_order_idx": {
-          "name": "properties_blocks_questions_block_questions_order_idx",
+        "portfolio_blocks_questions_block_questions_order_idx": {
+          "name": "portfolio_blocks_questions_block_questions_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -11778,8 +11903,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_questions_block_questions_parent_id_idx": {
-          "name": "properties_blocks_questions_block_questions_parent_id_idx",
+        "portfolio_blocks_questions_block_questions_parent_id_idx": {
+          "name": "portfolio_blocks_questions_block_questions_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -11795,10 +11920,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_questions_block_questions_parent_id_fk": {
-          "name": "properties_blocks_questions_block_questions_parent_id_fk",
-          "tableFrom": "properties_blocks_questions_block_questions",
-          "tableTo": "properties_blocks_questions_block",
+        "portfolio_blocks_questions_block_questions_parent_id_fk": {
+          "name": "portfolio_blocks_questions_block_questions_parent_id_fk",
+          "tableFrom": "portfolio_blocks_questions_block_questions",
+          "tableTo": "portfolio_blocks_questions_block",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -11815,8 +11940,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_questions_block": {
-      "name": "properties_blocks_questions_block",
+    "public.portfolio_blocks_questions_block": {
+      "name": "portfolio_blocks_questions_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -11851,8 +11976,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_questions_block_order_idx": {
-          "name": "properties_blocks_questions_block_order_idx",
+        "portfolio_blocks_questions_block_order_idx": {
+          "name": "portfolio_blocks_questions_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -11866,8 +11991,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_questions_block_parent_id_idx": {
-          "name": "properties_blocks_questions_block_parent_id_idx",
+        "portfolio_blocks_questions_block_parent_id_idx": {
+          "name": "portfolio_blocks_questions_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -11881,8 +12006,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_questions_block_path_idx": {
-          "name": "properties_blocks_questions_block_path_idx",
+        "portfolio_blocks_questions_block_path_idx": {
+          "name": "portfolio_blocks_questions_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -11898,10 +12023,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_questions_block_parent_id_fk": {
-          "name": "properties_blocks_questions_block_parent_id_fk",
-          "tableFrom": "properties_blocks_questions_block",
-          "tableTo": "properties",
+        "portfolio_blocks_questions_block_parent_id_fk": {
+          "name": "portfolio_blocks_questions_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_questions_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -11918,8 +12043,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_testimonial_block_testimonials": {
-      "name": "properties_blocks_testimonial_block_testimonials",
+    "public.portfolio_blocks_testimonial_block_testimonials": {
+      "name": "portfolio_blocks_testimonial_block_testimonials",
       "schema": "",
       "columns": {
         "_order": {
@@ -11966,8 +12091,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_testimonial_block_testimonials_order_idx": {
-          "name": "properties_blocks_testimonial_block_testimonials_order_idx",
+        "portfolio_blocks_testimonial_block_testimonials_order_idx": {
+          "name": "portfolio_blocks_testimonial_block_testimonials_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -11981,8 +12106,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_testimonial_block_testimonials_parent_id_idx": {
-          "name": "properties_blocks_testimonial_block_testimonials_parent_id_idx",
+        "portfolio_blocks_testimonial_block_testimonials_parent_id_idx": {
+          "name": "portfolio_blocks_testimonial_block_testimonials_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -11998,10 +12123,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_testimonial_block_testimonials_parent_id_fk": {
-          "name": "properties_blocks_testimonial_block_testimonials_parent_id_fk",
-          "tableFrom": "properties_blocks_testimonial_block_testimonials",
-          "tableTo": "properties_blocks_testimonial_block",
+        "portfolio_blocks_testimonial_block_testimonials_parent_id_fk": {
+          "name": "portfolio_blocks_testimonial_block_testimonials_parent_id_fk",
+          "tableFrom": "portfolio_blocks_testimonial_block_testimonials",
+          "tableTo": "portfolio_blocks_testimonial_block",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -12018,8 +12143,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_testimonial_block": {
-      "name": "properties_blocks_testimonial_block",
+    "public.portfolio_blocks_testimonial_block": {
+      "name": "portfolio_blocks_testimonial_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -12054,8 +12179,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_testimonial_block_order_idx": {
-          "name": "properties_blocks_testimonial_block_order_idx",
+        "portfolio_blocks_testimonial_block_order_idx": {
+          "name": "portfolio_blocks_testimonial_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -12069,8 +12194,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_testimonial_block_parent_id_idx": {
-          "name": "properties_blocks_testimonial_block_parent_id_idx",
+        "portfolio_blocks_testimonial_block_parent_id_idx": {
+          "name": "portfolio_blocks_testimonial_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -12084,8 +12209,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_testimonial_block_path_idx": {
-          "name": "properties_blocks_testimonial_block_path_idx",
+        "portfolio_blocks_testimonial_block_path_idx": {
+          "name": "portfolio_blocks_testimonial_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -12101,10 +12226,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_testimonial_block_parent_id_fk": {
-          "name": "properties_blocks_testimonial_block_parent_id_fk",
-          "tableFrom": "properties_blocks_testimonial_block",
-          "tableTo": "properties",
+        "portfolio_blocks_testimonial_block_parent_id_fk": {
+          "name": "portfolio_blocks_testimonial_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_testimonial_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -12121,8 +12246,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_highlights_highlights": {
-      "name": "properties_blocks_highlights_highlights",
+    "public.portfolio_blocks_highlights_highlights": {
+      "name": "portfolio_blocks_highlights_highlights",
       "schema": "",
       "columns": {
         "_order": {
@@ -12157,8 +12282,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_highlights_highlights_order_idx": {
-          "name": "properties_blocks_highlights_highlights_order_idx",
+        "portfolio_blocks_highlights_highlights_order_idx": {
+          "name": "portfolio_blocks_highlights_highlights_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -12172,8 +12297,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_highlights_highlights_parent_id_idx": {
-          "name": "properties_blocks_highlights_highlights_parent_id_idx",
+        "portfolio_blocks_highlights_highlights_parent_id_idx": {
+          "name": "portfolio_blocks_highlights_highlights_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -12189,10 +12314,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_highlights_highlights_parent_id_fk": {
-          "name": "properties_blocks_highlights_highlights_parent_id_fk",
-          "tableFrom": "properties_blocks_highlights_highlights",
-          "tableTo": "properties_blocks_highlights",
+        "portfolio_blocks_highlights_highlights_parent_id_fk": {
+          "name": "portfolio_blocks_highlights_highlights_parent_id_fk",
+          "tableFrom": "portfolio_blocks_highlights_highlights",
+          "tableTo": "portfolio_blocks_highlights",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -12209,8 +12334,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_highlights": {
-      "name": "properties_blocks_highlights",
+    "public.portfolio_blocks_highlights": {
+      "name": "portfolio_blocks_highlights",
       "schema": "",
       "columns": {
         "_order": {
@@ -12251,8 +12376,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_highlights_order_idx": {
-          "name": "properties_blocks_highlights_order_idx",
+        "portfolio_blocks_highlights_order_idx": {
+          "name": "portfolio_blocks_highlights_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -12266,8 +12391,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_highlights_parent_id_idx": {
-          "name": "properties_blocks_highlights_parent_id_idx",
+        "portfolio_blocks_highlights_parent_id_idx": {
+          "name": "portfolio_blocks_highlights_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -12281,8 +12406,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_highlights_path_idx": {
-          "name": "properties_blocks_highlights_path_idx",
+        "portfolio_blocks_highlights_path_idx": {
+          "name": "portfolio_blocks_highlights_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -12298,10 +12423,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_highlights_parent_id_fk": {
-          "name": "properties_blocks_highlights_parent_id_fk",
-          "tableFrom": "properties_blocks_highlights",
-          "tableTo": "properties",
+        "portfolio_blocks_highlights_parent_id_fk": {
+          "name": "portfolio_blocks_highlights_parent_id_fk",
+          "tableFrom": "portfolio_blocks_highlights",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -12318,8 +12443,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_carousel_with_thumbnail_slides": {
-      "name": "properties_blocks_section_carousel_with_thumbnail_slides",
+    "public.portfolio_blocks_section_carousel_with_thumbnail_slides": {
+      "name": "portfolio_blocks_section_carousel_with_thumbnail_slides",
       "schema": "",
       "columns": {
         "_order": {
@@ -12367,8 +12492,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_carousel_with_thumbnail_slides_order_idx": {
-          "name": "properties_blocks_section_carousel_with_thumbnail_slides_order_idx",
+        "portfolio_blocks_section_carousel_with_thumbnail_slides_order_idx": {
+          "name": "portfolio_blocks_section_carousel_with_thumbnail_slides_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -12382,8 +12507,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_carousel_with_thumbnail_slides_parent_id_idx": {
-          "name": "properties_blocks_section_carousel_with_thumbnail_slides_parent_id_idx",
+        "portfolio_blocks_section_carousel_with_thumbnail_slides_parent_id_idx": {
+          "name": "portfolio_blocks_section_carousel_with_thumbnail_slides_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -12399,10 +12524,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_carousel_with_thumbnail_slides_parent_id_fk": {
-          "name": "properties_blocks_section_carousel_with_thumbnail_slides_parent_id_fk",
-          "tableFrom": "properties_blocks_section_carousel_with_thumbnail_slides",
-          "tableTo": "properties_blocks_section_carousel_with_thumbnail",
+        "portfolio_blocks_section_carousel_with_thumbnail_slides_parent_id_fk": {
+          "name": "portfolio_blocks_section_carousel_with_thumbnail_slides_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_carousel_with_thumbnail_slides",
+          "tableTo": "portfolio_blocks_section_carousel_with_thumbnail",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -12419,8 +12544,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_section_carousel_with_thumbnail": {
-      "name": "properties_blocks_section_carousel_with_thumbnail",
+    "public.portfolio_blocks_section_carousel_with_thumbnail": {
+      "name": "portfolio_blocks_section_carousel_with_thumbnail",
       "schema": "",
       "columns": {
         "_order": {
@@ -12455,8 +12580,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_section_carousel_with_thumbnail_order_idx": {
-          "name": "properties_blocks_section_carousel_with_thumbnail_order_idx",
+        "portfolio_blocks_section_carousel_with_thumbnail_order_idx": {
+          "name": "portfolio_blocks_section_carousel_with_thumbnail_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -12470,8 +12595,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_carousel_with_thumbnail_parent_id_idx": {
-          "name": "properties_blocks_section_carousel_with_thumbnail_parent_id_idx",
+        "portfolio_blocks_section_carousel_with_thumbnail_parent_id_idx": {
+          "name": "portfolio_blocks_section_carousel_with_thumbnail_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -12485,8 +12610,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_section_carousel_with_thumbnail_path_idx": {
-          "name": "properties_blocks_section_carousel_with_thumbnail_path_idx",
+        "portfolio_blocks_section_carousel_with_thumbnail_path_idx": {
+          "name": "portfolio_blocks_section_carousel_with_thumbnail_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -12502,10 +12627,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_section_carousel_with_thumbnail_parent_id_fk": {
-          "name": "properties_blocks_section_carousel_with_thumbnail_parent_id_fk",
-          "tableFrom": "properties_blocks_section_carousel_with_thumbnail",
-          "tableTo": "properties",
+        "portfolio_blocks_section_carousel_with_thumbnail_parent_id_fk": {
+          "name": "portfolio_blocks_section_carousel_with_thumbnail_parent_id_fk",
+          "tableFrom": "portfolio_blocks_section_carousel_with_thumbnail",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -12522,8 +12647,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_quote": {
-      "name": "properties_blocks_quote",
+    "public.portfolio_blocks_quote": {
+      "name": "portfolio_blocks_quote",
       "schema": "",
       "columns": {
         "_order": {
@@ -12570,8 +12695,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_quote_order_idx": {
-          "name": "properties_blocks_quote_order_idx",
+        "portfolio_blocks_quote_order_idx": {
+          "name": "portfolio_blocks_quote_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -12585,8 +12710,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_quote_parent_id_idx": {
-          "name": "properties_blocks_quote_parent_id_idx",
+        "portfolio_blocks_quote_parent_id_idx": {
+          "name": "portfolio_blocks_quote_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -12600,8 +12725,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_quote_path_idx": {
-          "name": "properties_blocks_quote_path_idx",
+        "portfolio_blocks_quote_path_idx": {
+          "name": "portfolio_blocks_quote_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -12617,10 +12742,10 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_quote_parent_id_fk": {
-          "name": "properties_blocks_quote_parent_id_fk",
-          "tableFrom": "properties_blocks_quote",
-          "tableTo": "properties",
+        "portfolio_blocks_quote_parent_id_fk": {
+          "name": "portfolio_blocks_quote_parent_id_fk",
+          "tableFrom": "portfolio_blocks_quote",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -12637,8 +12762,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_blocks_property_block": {
-      "name": "properties_blocks_property_block",
+    "public.portfolio_blocks_property_block": {
+      "name": "portfolio_blocks_property_block",
       "schema": "",
       "columns": {
         "_order": {
@@ -12697,8 +12822,8 @@
         }
       },
       "indexes": {
-        "properties_blocks_property_block_order_idx": {
-          "name": "properties_blocks_property_block_order_idx",
+        "portfolio_blocks_property_block_order_idx": {
+          "name": "portfolio_blocks_property_block_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -12712,8 +12837,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_property_block_parent_id_idx": {
-          "name": "properties_blocks_property_block_parent_id_idx",
+        "portfolio_blocks_property_block_parent_id_idx": {
+          "name": "portfolio_blocks_property_block_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -12727,8 +12852,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_property_block_path_idx": {
-          "name": "properties_blocks_property_block_path_idx",
+        "portfolio_blocks_property_block_path_idx": {
+          "name": "portfolio_blocks_property_block_path_idx",
           "columns": [
             {
               "expression": "_path",
@@ -12742,8 +12867,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_property_block_image_idx": {
-          "name": "properties_blocks_property_block_image_idx",
+        "portfolio_blocks_property_block_image_idx": {
+          "name": "portfolio_blocks_property_block_image_idx",
           "columns": [
             {
               "expression": "image_id",
@@ -12757,8 +12882,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_blocks_property_block_logo_idx": {
-          "name": "properties_blocks_property_block_logo_idx",
+        "portfolio_blocks_property_block_logo_idx": {
+          "name": "portfolio_blocks_property_block_logo_idx",
           "columns": [
             {
               "expression": "logo_id",
@@ -12774,9 +12899,9 @@
         }
       },
       "foreignKeys": {
-        "properties_blocks_property_block_image_id_images_id_fk": {
-          "name": "properties_blocks_property_block_image_id_images_id_fk",
-          "tableFrom": "properties_blocks_property_block",
+        "portfolio_blocks_property_block_image_id_images_id_fk": {
+          "name": "portfolio_blocks_property_block_image_id_images_id_fk",
+          "tableFrom": "portfolio_blocks_property_block",
           "tableTo": "images",
           "columnsFrom": [
             "image_id"
@@ -12787,9 +12912,9 @@
           "onDelete": "set null",
           "onUpdate": "no action"
         },
-        "properties_blocks_property_block_logo_id_images_id_fk": {
-          "name": "properties_blocks_property_block_logo_id_images_id_fk",
-          "tableFrom": "properties_blocks_property_block",
+        "portfolio_blocks_property_block_logo_id_images_id_fk": {
+          "name": "portfolio_blocks_property_block_logo_id_images_id_fk",
+          "tableFrom": "portfolio_blocks_property_block",
           "tableTo": "images",
           "columnsFrom": [
             "logo_id"
@@ -12800,10 +12925,10 @@
           "onDelete": "set null",
           "onUpdate": "no action"
         },
-        "properties_blocks_property_block_parent_id_fk": {
-          "name": "properties_blocks_property_block_parent_id_fk",
-          "tableFrom": "properties_blocks_property_block",
-          "tableTo": "properties",
+        "portfolio_blocks_property_block_parent_id_fk": {
+          "name": "portfolio_blocks_property_block_parent_id_fk",
+          "tableFrom": "portfolio_blocks_property_block",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -12820,8 +12945,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties": {
-      "name": "properties",
+    "public.portfolio": {
+      "name": "portfolio",
       "schema": "",
       "columns": {
         "id": {
@@ -12842,24 +12967,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "meta_title": {
-          "name": "meta_title",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "meta_description": {
-          "name": "meta_description",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "meta_image_id": {
-          "name": "meta_image_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp(3) with time zone",
@@ -12873,46 +12980,16 @@
           "notNull": false
         }
       },
-      "indexes": {
-        "properties_meta_meta_image_idx": {
-          "name": "properties_meta_meta_image_idx",
-          "columns": [
-            {
-              "expression": "meta_image_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "properties_meta_image_id_images_id_fk": {
-          "name": "properties_meta_image_id_images_id_fk",
-          "tableFrom": "properties",
-          "tableTo": "images",
-          "columnsFrom": [
-            "meta_image_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "indexes": {},
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.properties_rels": {
-      "name": "properties_rels",
+    "public.portfolio_rels": {
+      "name": "portfolio_rels",
       "schema": "",
       "columns": {
         "id": {
@@ -12953,8 +13030,8 @@
         }
       },
       "indexes": {
-        "properties_rels_order_idx": {
-          "name": "properties_rels_order_idx",
+        "portfolio_rels_order_idx": {
+          "name": "portfolio_rels_order_idx",
           "columns": [
             {
               "expression": "order",
@@ -12968,8 +13045,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_rels_parent_idx": {
-          "name": "properties_rels_parent_idx",
+        "portfolio_rels_parent_idx": {
+          "name": "portfolio_rels_parent_idx",
           "columns": [
             {
               "expression": "parent_id",
@@ -12983,8 +13060,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_rels_path_idx": {
-          "name": "properties_rels_path_idx",
+        "portfolio_rels_path_idx": {
+          "name": "portfolio_rels_path_idx",
           "columns": [
             {
               "expression": "path",
@@ -12998,8 +13075,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_rels_images_id_idx": {
-          "name": "properties_rels_images_id_idx",
+        "portfolio_rels_images_id_idx": {
+          "name": "portfolio_rels_images_id_idx",
           "columns": [
             {
               "expression": "images_id",
@@ -13013,8 +13090,8 @@
           "method": "btree",
           "with": {}
         },
-        "properties_rels_mux_video_id_idx": {
-          "name": "properties_rels_mux_video_id_idx",
+        "portfolio_rels_mux_video_id_idx": {
+          "name": "portfolio_rels_mux_video_id_idx",
           "columns": [
             {
               "expression": "mux_video_id",
@@ -13030,10 +13107,10 @@
         }
       },
       "foreignKeys": {
-        "properties_rels_parent_fk": {
-          "name": "properties_rels_parent_fk",
-          "tableFrom": "properties_rels",
-          "tableTo": "properties",
+        "portfolio_rels_parent_fk": {
+          "name": "portfolio_rels_parent_fk",
+          "tableFrom": "portfolio_rels",
+          "tableTo": "portfolio",
           "columnsFrom": [
             "parent_id"
           ],
@@ -13043,9 +13120,9 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "properties_rels_images_fk": {
-          "name": "properties_rels_images_fk",
-          "tableFrom": "properties_rels",
+        "portfolio_rels_images_fk": {
+          "name": "portfolio_rels_images_fk",
+          "tableFrom": "portfolio_rels",
           "tableTo": "images",
           "columnsFrom": [
             "images_id"
@@ -13056,9 +13133,223 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "properties_rels_mux_video_fk": {
-          "name": "properties_rels_mux_video_fk",
-          "tableFrom": "properties_rels",
+        "portfolio_rels_mux_video_fk": {
+          "name": "portfolio_rels_mux_video_fk",
+          "tableFrom": "portfolio_rels",
+          "tableTo": "mux_video",
+          "columnsFrom": [
+            "mux_video_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.work": {
+      "name": "work",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "header_copy": {
+          "name": "header_copy",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "before_copy": {
+          "name": "before_copy",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.work_rels": {
+      "name": "work_rels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "images_id": {
+          "name": "images_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mux_video_id": {
+          "name": "mux_video_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "work_rels_order_idx": {
+          "name": "work_rels_order_idx",
+          "columns": [
+            {
+              "expression": "order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "work_rels_parent_idx": {
+          "name": "work_rels_parent_idx",
+          "columns": [
+            {
+              "expression": "parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "work_rels_path_idx": {
+          "name": "work_rels_path_idx",
+          "columns": [
+            {
+              "expression": "path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "work_rels_images_id_idx": {
+          "name": "work_rels_images_id_idx",
+          "columns": [
+            {
+              "expression": "images_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "work_rels_mux_video_id_idx": {
+          "name": "work_rels_mux_video_id_idx",
+          "columns": [
+            {
+              "expression": "mux_video_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "work_rels_parent_fk": {
+          "name": "work_rels_parent_fk",
+          "tableFrom": "work_rels",
+          "tableTo": "work",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "work_rels_images_fk": {
+          "name": "work_rels_images_fk",
+          "tableFrom": "work_rels",
+          "tableTo": "images",
+          "columnsFrom": [
+            "images_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "work_rels_mux_video_fk": {
+          "name": "work_rels_mux_video_fk",
+          "tableFrom": "work_rels",
           "tableTo": "mux_video",
           "columnsFrom": [
             "mux_video_id"

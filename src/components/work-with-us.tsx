@@ -1,7 +1,7 @@
 "use client";
 
-import { contactAction } from "@/actions/contact";
-import { ContactSchema } from "@/schemas/contact";
+import { workWithUsAction } from "@/actions/work-with-us";
+import { WorkWithUsSchema } from "@/schemas/work-with-us";
 import { Button } from "@/shadcn/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/shadcn/components/ui/form";
 import { Input } from "@/shadcn/components/ui/input";
@@ -13,10 +13,21 @@ import { toast } from "sonner";
 import { AutosizeTextarea } from "../shadcn/components/ui/autosize-textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../shadcn/components/ui/select";
 
-export function ContactForm() {
+export default function ContactFormRenderer() {
+  return (
+    <div className="max-w-screen-sm mx-auto gap-8 flex flex-col py-20">
+      {/* {data.heading && <h2 className="text-xl uppercase font-semibold leading-none mb-0">{data.heading}</h2>}
+			{data.beforeText && <RichText className="flex flex-col gap-4 richtext" data={data.beforeText} />} */}
+      <WorkWithUsForm />
+      {/* {data.afterText && <RichText className="flex flex-col gap-4 text-center richtext" data={data.afterText} />} */}
+    </div>
+  );
+}
+
+export function WorkWithUsForm() {
   const { form, handleSubmitWithAction, resetFormAndAction } = useHookFormAction(
-    contactAction,
-    zodResolver(ContactSchema),
+    workWithUsAction,
+    zodResolver(WorkWithUsSchema),
     {
       actionProps: {
         onError: () => {
@@ -31,6 +42,7 @@ export function ContactForm() {
       formProps: {
         defaultValues: {
           email: "",
+          link: "",
           message: "",
           name: "",
           phoneNumber: "",
@@ -113,6 +125,23 @@ export function ContactForm() {
         />
         <FormField
           control={form.control}
+          name="link"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Link to your CV</FormLabel>
+              <FormControl>
+                <Input
+                  className="!border-b-dg-off-black placeholder:text-dg-off-black/80  text-dg-off-black"
+                  placeholder="Link to your CV"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="preferredMethodOfContact"
           render={({ field }) => (
             <FormItem>
@@ -142,16 +171,5 @@ export function ContactForm() {
         </Button>
       </form>
     </Form>
-  );
-}
-
-export default function ContactFormRenderer() {
-  return (
-    <div className="max-w-screen-sm mx-auto gap-8 flex flex-col py-20">
-      {/* {data.heading && <h2 className="text-xl uppercase font-semibold leading-none mb-0">{data.heading}</h2>}
-			{data.beforeText && <RichText className="flex flex-col gap-4 richtext" data={data.beforeText} />} */}
-      <ContactForm />
-      {/* {data.afterText && <RichText className="flex flex-col gap-4 text-center richtext" data={data.afterText} />} */}
-    </div>
   );
 }

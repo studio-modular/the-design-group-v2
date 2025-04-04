@@ -1,12 +1,12 @@
 "use server";
 
-import { OfferSchema } from "@/schemas/offer";
+import { WorkWithUsSchema } from "@/schemas/work-with-us";
 import { actionClient } from "@/utilities/action-client";
 import { env } from "@/utilities/env";
 import { bulkSubscribe, createEvent, profilesApi } from "@/utilities/klaviyo";
 import { parseFullName } from "parse-full-name";
 
-export const offerAction = actionClient.schema(OfferSchema).action(async ({ parsedInput }) => {
+export const workWithUsAction = actionClient.schema(WorkWithUsSchema).action(async ({ parsedInput }) => {
   const { email, name } = parsedInput;
   const { first, last } = parseFullName(name);
   if (!first || !last) throw new Error("Something went wrong");
@@ -21,8 +21,9 @@ export const offerAction = actionClient.schema(OfferSchema).action(async ({ pars
     },
   });
   await Promise.all([
-    bulkSubscribe(email, env.KLAVIYO_OFFERS_LIST),
-    createEvent(email, "Signed up to offers mailing list", parsedInput),
+    bulkSubscribe(email, env.KLAVIYO_WORK_WITH_US_LIST),
+    bulkSubscribe(email, env.KLAVIYO_MAILING_LIST),
+    createEvent(email, "Submitted work with us form on The Design Group", parsedInput),
   ]);
   if (body.data.id) return { success: true };
   throw new Error("Something went wrong");

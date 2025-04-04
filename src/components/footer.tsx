@@ -13,14 +13,21 @@ export default function Footer() {
             <Link className="uppercase tracking-wider text-base" href="/">
               Home
             </Link>
-            <Link className="uppercase tracking-wider text-base" href="/location">
-              Location
+            <Link className="uppercase tracking-wider text-base" href="/portfolio">
+              Portfolio
             </Link>
-            <Link className="uppercase tracking-wider text-base" href="/properties">
-              Properties
+            <Link
+              className="uppercase tracking-wider text-base"
+              href="https://waimarinolodge.co.nz/real-estate"
+              target="_blank"
+            >
+              Real Estate
             </Link>
-            <Link className="uppercase tracking-wider text-base" href="/offer">
-              The Offer
+            <Link className="uppercase tracking-wider text-base" href="/contact">
+              Contact
+            </Link>
+            <Link className="uppercase tracking-wider text-base" href="/work-with-us">
+              Work With Us
             </Link>
           </div>
         </nav>

@@ -9,7 +9,7 @@ import { DialogTitle } from "../shadcn/components/ui/dialog";
 import { Separator } from "../shadcn/components/ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../shadcn/components/ui/sheet";
 import { cn } from "../shadcn/utils";
-import { Logo } from "./logo";
+import { DesignGroupFullLogo as Logo } from "./logo";
 
 export function MobileNavigationBar({ className }: { className?: string }) {
   const [open, setOpen] = useState<boolean>(false);
@@ -17,7 +17,7 @@ export function MobileNavigationBar({ className }: { className?: string }) {
     <div className={`${className} block lg:hidden`}>
       <div className="fixed flex justify-start left-8 z-30 top-8 text-inherit">
         <Link href="/">
-          <Logo height="30px" width="auto" />
+          <Logo height="40px" width="auto" />
         </Link>
       </div>
       <Sheet key="mobile-menu" onOpenChange={setOpen} open={open}>
@@ -49,26 +49,34 @@ export function MobileNavigationBar({ className }: { className?: string }) {
             <Separator className="w-11/12 bg-white mx-auto" />
             <Link
               className="uppercase tracking-wider text-lg text-left w-11/12 mx-auto"
-              href="/location"
+              href="/portfolio"
               onClick={() => setOpen(false)}
             >
-              Location
+              Portfolio
             </Link>
             <Separator className="w-11/12 bg-white mx-auto" />
             <Link
               className="uppercase tracking-wider text-lg text-left w-11/12 mx-auto"
-              href="/properties"
+              href="https://waimarinolodge.co.nz/real-estate"
               onClick={() => setOpen(false)}
             >
-              Properties
+              Real Estate
             </Link>
             <Separator className="w-11/12 bg-white mx-auto" />
             <Link
               className="uppercase tracking-wider text-lg text-left w-11/12 mx-auto"
-              href="/offer"
+              href="/contact"
               onClick={() => setOpen(false)}
             >
-              The Offer
+              Contact
+            </Link>
+            <Separator className="w-11/12 bg-white mx-auto" />
+            <Link
+              className="uppercase tracking-wider text-lg text-left w-11/12 mx-auto"
+              href="/contact"
+              onClick={() => setOpen(false)}
+            >
+              Work With Us
             </Link>
           </SheetHeader>
         </SheetContent>
@@ -86,19 +94,23 @@ export default function NavigationBar({ className }: { className?: string }) {
         className={`hidden lg:flex fixed bg-gradient-to-b from-black/10 to-black/0 !border-l-transparent box-border top-0 font-skia tracking-wide left-0 w-full p-6 lg:p-8 text-white z-30 items-start ${className ?? ""}`}
       >
         <nav className="flex-1 flex gap-8 lg:gap-12 items-start text-sm h-full uppercase tracking-wider">
-          <Link className="uppercase tracking-wider text-base" href="/location">
-            Location
+          <Link className="uppercase tracking-wider text-base" href="/portfolio">
+            Portfolio
           </Link>
-          <Link className="uppercase tracking-wider text-base" href="/properties">
-            Properties
+          <Link
+            className="uppercase tracking-wider text-base"
+            href="https://waimarinolodge.co.nz/real-estate"
+            target="_blank"
+          >
+            Real Estate
           </Link>
-          <Link className="uppercase tracking-wider text-base" href="/offer">
-            The Offer
+          <Link className="uppercase tracking-wider text-base" href="/contact">
+            Contact
           </Link>
         </nav>
         <div>
           <Link className="text-current" href="/">
-            <Logo height="42px" width="auto" />
+            <Logo height="80px" width="auto" />
           </Link>
         </div>
         <div className="flex-1 text-white flex justify-end">
@@ -129,24 +141,32 @@ export default function NavigationBar({ className }: { className?: string }) {
                 </Link>
                 <Link
                   className="uppercase tracking-wider text-lg text-right w-11/12 mx-auto"
-                  href="/location"
+                  href="/portfolio"
                   onClick={() => setOpen(false)}
                 >
-                  Location
+                  Portfolio
                 </Link>
                 <Link
                   className="uppercase tracking-wider text-lg text-right w-11/12 mx-auto"
-                  href="/properties"
+                  href="https://waimarinolodge.co.nz/real-estate"
                   onClick={() => setOpen(false)}
+                  target="_blank"
                 >
-                  Properties
+                  Real Estate
                 </Link>
                 <Link
                   className="uppercase tracking-wider text-lg text-right w-11/12 mx-auto"
-                  href="/offer"
+                  href="/contact"
                   onClick={() => setOpen(false)}
                 >
-                  The Offer
+                  Contact
+                </Link>
+                <Link
+                  className="uppercase tracking-wider text-lg text-right w-11/12 mx-auto"
+                  href="/work-with-us"
+                  onClick={() => setOpen(false)}
+                >
+                  Work With Us
                 </Link>
               </nav>
             </SheetContent>

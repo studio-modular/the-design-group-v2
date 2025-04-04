@@ -2,8 +2,9 @@ import parsePhoneNumber from "libphonenumber-js";
 import { parseFullName } from "parse-full-name";
 import { z } from "zod";
 
-export const OfferSchema = z.strictObject({
+export const WorkWithUsSchema = z.strictObject({
   email: z.string().email({ message: "Please add your email" }),
+  link: z.string().url().min(1),
   message: z.string().trim().min(1),
   name: z.preprocess(
     (val) => {
@@ -27,8 +28,7 @@ export const OfferSchema = z.strictObject({
       message: "Please add your phone number (with country code)",
     }),
   ),
-  postalAddress: z.string().trim().min(1),
   preferredMethodOfContact: z.enum(["phone", "email", "email-or-phone"]),
 });
 
-export type OfferSchemaType = z.infer<typeof OfferSchema>;
+export type WorkWithUsSchemaType = z.infer<typeof WorkWithUsSchema>;

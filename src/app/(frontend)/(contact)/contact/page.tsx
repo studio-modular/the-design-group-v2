@@ -13,12 +13,12 @@ const getHomePageData = unstable_cache(
     const cms = await payload();
     const data = await cms.findGlobal({
       depth: 4,
-      slug: "offer",
+      slug: "contact",
     });
     return data;
   },
-  ["offer", "all"],
-  { revalidate: 86_400, tags: ["offer", "all"] },
+  ["contact", "all"],
+  { revalidate: 86_400, tags: ["contact", "all"] },
 );
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
           ],
         },
       }),
-    title: meta?.title ?? `The Offer | ${env.NEXT_PUBLIC_BASE_TITLE}`,
+    title: meta?.title ?? `Contact | ${env.NEXT_PUBLIC_BASE_TITLE}`,
   };
 }
 

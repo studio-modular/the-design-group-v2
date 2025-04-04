@@ -90,15 +90,15 @@ export interface Config {
   };
   globals: {
     home: Home;
-    offer: Offer;
-    properties: Property;
-    location: Location;
+    contact: Contact;
+    portfolio: Portfolio;
+    work: Work;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
-    offer: OfferSelect<false> | OfferSelect<true>;
-    properties: PropertiesSelect<false> | PropertiesSelect<true>;
-    location: LocationSelect<false> | LocationSelect<true>;
+    contact: ContactSelect<false> | ContactSelect<true>;
+    portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
+    work: WorkSelect<false> | WorkSelect<true>;
   };
   locale: null;
   user: User & {
@@ -1649,9 +1649,9 @@ export interface PropertyBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "offer".
+ * via the `definition` "contact".
  */
-export interface Offer {
+export interface Contact {
   id: number;
   title: string;
   asset?:
@@ -1706,9 +1706,9 @@ export interface Offer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "properties".
+ * via the `definition` "portfolio".
  */
-export interface Property {
+export interface Portfolio {
   id: number;
   title: string;
   asset?:
@@ -1772,9 +1772,9 @@ export interface Property {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "location".
+ * via the `definition` "work".
  */
-export interface Location {
+export interface Work {
   id: number;
   title: string;
   asset?:
@@ -1786,45 +1786,36 @@ export interface Location {
         relationTo: 'mux-video';
         value: number | MuxVideo;
       } | null);
-  markerText?: string | null;
-  content?:
-    | (
-        | Section01Block
-        | Section02Block
-        | Section03Block
-        | Section04Block
-        | Section05Block
-        | Section06Block
-        | Section07Block
-        | Section08Block
-        | Section09Block
-        | Section10Block
-        | Section11Block
-        | Section12Block
-        | Section13Block
-        | Section14Block
-        | Section15Block
-        | Section16Block
-        | Section17Block
-        | Section18Block
-        | Section19Block
-        | Section20Block
-        | Section21Block
-        | Section22Block
-        | Section23Block
-        | Section24Block
-        | SectionSeparatorBlock
-        | FullScreenBlock
-        | CarouselBlock
-        | QuestionsBlock
-        | TestimonialBlock
-        | HighlightsBlock
-        | SectionCarouselWithThumbnail
-        | QuoteBlock
-        | SectionMedia
-        | PropertyBlock
-      )[]
-    | null;
+  headerCopy?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  beforeCopy?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -2475,9 +2466,9 @@ export interface PropertyBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "offer_select".
+ * via the `definition` "contact_select".
  */
-export interface OfferSelect<T extends boolean = true> {
+export interface ContactSelect<T extends boolean = true> {
   title?: T;
   asset?: T;
   headerCopy?: T;
@@ -2495,9 +2486,9 @@ export interface OfferSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "properties_select".
+ * via the `definition` "portfolio_select".
  */
-export interface PropertiesSelect<T extends boolean = true> {
+export interface PortfolioSelect<T extends boolean = true> {
   title?: T;
   asset?: T;
   markerText?: T;
@@ -2552,50 +2543,13 @@ export interface PropertiesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "location_select".
+ * via the `definition` "work_select".
  */
-export interface LocationSelect<T extends boolean = true> {
+export interface WorkSelect<T extends boolean = true> {
   title?: T;
   asset?: T;
-  markerText?: T;
-  content?:
-    | T
-    | {
-        'section-01-block'?: T | Section01BlockSelect<T>;
-        'section-02-block'?: T | Section02BlockSelect<T>;
-        'section-03-block'?: T | Section03BlockSelect<T>;
-        'section-04-block'?: T | Section04BlockSelect<T>;
-        'section-05-block'?: T | Section05BlockSelect<T>;
-        'section-06-block'?: T | Section06BlockSelect<T>;
-        'section-07-block'?: T | Section07BlockSelect<T>;
-        'section-08-block'?: T | Section08BlockSelect<T>;
-        'section-09-block'?: T | Section09BlockSelect<T>;
-        'section-10-block'?: T | Section10BlockSelect<T>;
-        'section-11-block'?: T | Section11BlockSelect<T>;
-        'section-12-block'?: T | Section12BlockSelect<T>;
-        'section-13-block'?: T | Section13BlockSelect<T>;
-        'section-14-block'?: T | Section14BlockSelect<T>;
-        'section-15-block'?: T | Section15BlockSelect<T>;
-        'section-16-block'?: T | Section16BlockSelect<T>;
-        'section-17-block'?: T | Section17BlockSelect<T>;
-        'section-18-block'?: T | Section18BlockSelect<T>;
-        'section-19-block'?: T | Section19BlockSelect<T>;
-        'section-20-block'?: T | Section20BlockSelect<T>;
-        'section-21-block'?: T | Section21BlockSelect<T>;
-        'section-22-block'?: T | Section22BlockSelect<T>;
-        'section-23-block'?: T | Section23BlockSelect<T>;
-        'section-24-block'?: T | Section24BlockSelect<T>;
-        'section-separator-block'?: T | SectionSeparatorBlockSelect<T>;
-        'full-screen-block'?: T | FullScreenBlockSelect<T>;
-        'carousel-block'?: T | CarouselBlockSelect<T>;
-        'questions-block'?: T | QuestionsBlockSelect<T>;
-        'testimonial-block'?: T | TestimonialBlockSelect<T>;
-        highlights?: T | HighlightsBlockSelect<T>;
-        'section-carousel-with-thumbnail'?: T | SectionCarouselWithThumbnailSelect<T>;
-        quote?: T | QuoteBlockSelect<T>;
-        'section-media'?: T | SectionMediaSelect<T>;
-        'property-block'?: T | PropertyBlockSelect<T>;
-      };
+  headerCopy?: T;
+  beforeCopy?: T;
   meta?:
     | T
     | {

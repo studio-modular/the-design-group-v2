@@ -13,10 +13,10 @@ import sharp from "sharp";
 import { Files } from "./collections/files";
 import { Images } from "./collections/images";
 import { Users } from "./collections/Users";
+import { Contact } from "./globals/contact";
 import { Home } from "./globals/home";
-import { Location } from "./globals/location";
-import { Offer } from "./globals/offer";
-import { Properties } from "./globals/properties";
+import { Portfolio } from "./globals/portfolio";
+import { Work } from "./globals/work";
 import { env } from "./utilities/env";
 
 const filename = fileURLToPath(import.meta.url);
@@ -34,10 +34,10 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || "",
     },
-    push: false,
+    // push: false,
   }),
   editor: lexicalEditor(),
-  globals: [Home, Offer, Properties, Location],
+  globals: [Home, Contact, Portfolio, Work],
   plugins: [
     computeBlurhash({
       collections: ["images"],
@@ -79,6 +79,9 @@ export default buildConfig({
         "staff",
         "location",
         "terms-and-conditions",
+        "contact",
+        "portfolio",
+        "work",
       ],
       tabbedUI: true,
       uploadsCollection: "images",

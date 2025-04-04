@@ -39,7 +39,7 @@ import {
   Testimonials,
 } from "../blocks/sections/";
 
-export const Location: GlobalConfig = {
+export const Portfolio: GlobalConfig = {
   access: {
     read: () => true,
   },
@@ -105,10 +105,10 @@ export const Location: GlobalConfig = {
   ],
   hooks: {
     afterChange: [
-      async function handleLocationChange() {
-        revalidateTag("location");
+      async function handlePortfolioChange() {
+        revalidateTag("portfolio");
       },
     ],
   },
-  slug: "location",
+  slug: "portfolio",
 };
