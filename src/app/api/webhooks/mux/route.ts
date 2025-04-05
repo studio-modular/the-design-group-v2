@@ -2,7 +2,7 @@ import Mux from "@mux/mux-node";
 import { Asset } from "@mux/mux-node/resources/video/assets.mjs";
 import { PayloadHandler } from "payload";
 
-export const getAssetMetadata = (asset: Asset) => {
+const getAssetMetadata = (asset: Asset) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-asserted-optional-chain
   const videoTrack = asset.tracks?.find((track: any) => track.type === "video")!;
 
