@@ -63,12 +63,12 @@ export function Video({
       {current !== index && (
         <h3
           className={cn(
-            "absolute bottom-0 pointer-events-none !w-1/3 text-left translate-y-[105%] left-1/2 right-auto text-lg top-10 text-black font-serif tracking-widest uppercase",
+            "absolute bottom-0 pointer-events-none !w-1/3 text-left translate-y-[105%] left-1/2 right-auto text-lg top-10 font-serif tracking-widest uppercase",
             (current + 1 === index || (current === length - 1 && index === 0)) && "right-1/2 left-auto text-right",
-            "lg:block hidden",
+            "lg:block hidden text-white",
           )}
         >
-          {title} <hr className="w-4" />
+          {title}
         </h3>
       )}
       <div
@@ -81,16 +81,16 @@ export function Video({
       >
         <h3
           className={cn(
-            current === index && "hidden uppercase md:block w-full px-2 text-center !mb-0 font-serif",
+            current === index && "hidden uppercase md:block text-white w-full px-2 text-center !mb-0 font-serif",
             current !== index && "hidden",
           )}
         >
           {title}
         </h3>
         {!playing || !hasInteraction ? (
-          <PlayCircle className="stroke-[0.5] size-8 md:size-12" />
+          <PlayCircle className="stroke-[0.5] stroke-white size-8 md:size-12" />
         ) : (
-          <PauseCircle className="stroke-[0.5] size-8 md:size-12" />
+          <PauseCircle className="stroke-[0.5] stroke-white size-8 md:size-12" />
         )}
       </div>
     </>
