@@ -9,15 +9,15 @@ import { DialogTitle } from "../shadcn/components/ui/dialog";
 import { Separator } from "../shadcn/components/ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../shadcn/components/ui/sheet";
 import { cn } from "../shadcn/utils";
-import { DesignGroupLogo as Logo } from "./logo";
+import { DesignGroupFullLogo as Logo } from "./logo";
 
 export function MobileNavigationBar({ className }: { className?: string }) {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <div className={`${className} block lg:hidden`}>
       <div className="fixed flex justify-start left-8 z-30 top-8 text-inherit">
-        <Link href="/">
-          <Logo height="40px" width="auto" />
+        <Link className="-mt-2" href="/">
+          <Logo height="50px" width="auto" />
         </Link>
       </div>
       <Sheet key="mobile-menu" onOpenChange={setOpen} open={open}>
@@ -106,7 +106,7 @@ export default function NavigationBar({ className }: { className?: string }) {
         </nav>
         <div>
           <Link className="text-current" href="/">
-            <Logo height="50px" width="auto" />
+            <Logo className="-mt-2" height="81px" width="auto" />
           </Link>
         </div>
         <div className="flex-1 text-white flex justify-end">

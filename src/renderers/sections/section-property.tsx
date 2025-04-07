@@ -29,7 +29,7 @@ export function SectionProperty({ description, features, image, logo }: Property
       <div className="row-start-2= row-end-3 px-8 md:px-0 text-center md:text-left md:col-start-10 md:col-end-16">
         <div className="flex flex-col items-center justify-center gap-8">
           <div>
-            <div className="w-3/4 mx-auto md:mx-0 md:w-full md:max-w-40 mb-8">
+            <div className="w-1/2 max-w-24 mx-auto md:mx-0 md:w-full md:max-w-40 mb-8">
               <AspectRatio
                 className="ratio flex items-center justify-center bg-foreground text-background"
                 ratio={16 / 9}

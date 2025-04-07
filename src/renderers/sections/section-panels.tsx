@@ -15,7 +15,7 @@ export function SectionPanelsRenderer({ panels }: PanelsBlock) {
       <div className="max-w-7xl mx-auto flex flex-wrap gap-16 md:gap-32">
         {panels.map((p) => {
           return (
-            <div className="flex flex-col gap-8 flex-1 basis-full md:basis-1/3" key={`${p.id} ${id}`}>
+            <div className="flex flex-col gap-16 flex-1 basis-full md:basis-1/3" key={`${p.id} ${id}`}>
               <AspectRatio className="w-full bg-black text-white" ratio={16 / 9}>
                 {p.asset && typeof p.asset !== "number" && p.asset.url && (
                   <Zoom classDialog="bg-white">
@@ -35,7 +35,7 @@ export function SectionPanelsRenderer({ panels }: PanelsBlock) {
                   </Zoom>
                 )}
               </AspectRatio>
-              <RichText className="richtext flex flex-col gap-4" data={p.content} />
+              <RichText className="richtext flex flex-col gap-8" data={p.content} />
             </div>
           );
         })}
