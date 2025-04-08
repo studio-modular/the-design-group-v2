@@ -141,7 +141,7 @@ export default function VideosCarouselRenderer({ videos }: VideosBlock) {
     );
   });
   return (
-    <div className="relative pb-10 flex items-stretch justify-center">
+    <div className="relative pb-10 flex items-stretch justify-center max-w-full overflow-hidden">
       <div className="min-h-full w-[91.66666666%] flex items-center justify-center">
         <Carousel
           className="px-2 w-full"
