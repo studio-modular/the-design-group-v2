@@ -16,7 +16,7 @@ import MuxPlayer from "@mux/mux-player-react/lazy";
 import ClassNames from "embla-carousel-class-names";
 import { PauseCircle, PlayCircle } from "lucide-react";
 import Image from "next/image";
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useLayoutEffect, useState } from "react";
 
 export function Video({
   current,
@@ -101,7 +101,7 @@ export default function VideosCarouselRenderer({ videos }: VideosBlock) {
   const [api, setApi] = useState<CarouselApi>();
   const [hasInteraction, setHasInteraction] = useState(false);
   const [current, setCurrent] = useState(0);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!api) return;
     setCurrent(api.selectedScrollSnap());
     api.on("select", () => {
