@@ -48,7 +48,7 @@ export default async function HomePage() {
   if (!data) return null;
   return (
     <>
-      <div className="md:min-h-screen w-full flex flex-col items-center justify-center">
+      <div className="md:min-h-[80vh] w-full flex flex-col items-center justify-center">
         <div className="max-w-screen-lg px-8 py-24 w-full flex flex-col sm:flex-row justify-center gap-8 lg:gap-20">
           <div className="basis-1/3 flex items-center">
             <AspectRatio className="w-full bg-black" ratio={3 / 4}>
