@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { PasswordProtection } from "@/components/password-protection";
 import { SectionImage } from "@/renderers/media";
 import SectionRenderer from "@/renderers/sections/renderer";
 import { VideoRenderer } from "@/renderers/video";
@@ -8,6 +9,7 @@ import { env } from "@/utilities/env";
 import { payload } from "@/utilities/payload";
 import { ChevronDown } from "lucide-react";
 import { unstable_cache } from "next/cache";
+import { cookies } from "next/headers";
 import Link from "next/link";
 
 const getRealEstatePageData = unstable_cache(
@@ -48,8 +50,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RealEstatePage() {
   const data = await getRealEstatePageData();
   if (!data) return null;
+  const cookieStore = await cookies();
+  const hasCookie = cookieStore.has("auth_logged_in");
   return (
     <>
+      {!hasCookie && <PasswordProtection />}
       <div className="sticky top-0 left-0 md:h-auto h-[70vh]">
         <AspectRatio className="flex justify-center items-center md:h-auto h-[70vh]" ratio={16 / 9}>
           {data.asset?.value && typeof data.asset?.value !== "number" && data.asset.relationTo === "images" && (
